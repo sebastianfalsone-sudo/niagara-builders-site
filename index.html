@@ -1,0 +1,641 @@
+<title>Niagara Builders</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+
+  :root{
+    --ink:#1a1d21;
+    --ink-soft:#484e55;
+    --paper:#f6f4ef;
+    --paper-raised:#ffffff;
+    --line:#dcd8cf;
+    --blue:#1f7fd1;
+    --blue-deep:#155a9c;
+    --blue-light:#8fcaf0;
+    --accent-wash:#eaf3fb;
+    --focus:#155a9c;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eef1f4;
+      --ink-soft:#b7bec6;
+      --paper:#12181e;
+      --paper-raised:#182430;
+      --line:#2a3542;
+      --blue:#5fa8e6;
+      --blue-deep:#8fcaf0;
+      --blue-light:#3a6c93;
+      --accent-wash:#182b3a;
+      --focus:#8fcaf0;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eef1f4;
+    --ink-soft:#b7bec6;
+    --paper:#12181e;
+    --paper-raised:#182430;
+    --line:#2a3542;
+    --blue:#5fa8e6;
+    --blue-deep:#8fcaf0;
+    --blue-light:#3a6c93;
+    --accent-wash:#182b3a;
+    --focus:#8fcaf0;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-inline:0;
+  }
+  img{max-width:100%;}
+  h1,h2,h3{font-family:'Archivo',system-ui,sans-serif;text-wrap:balance;margin:0;}
+  a{color:inherit;}
+  .wrap{
+    max-width:1120px;
+    margin-inline:auto;
+    padding-inline:20px;
+  }
+  @media (min-width:640px){ .wrap{padding-inline:32px;} }
+
+  .mono{
+    font-family:'Space Mono',monospace;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    font-size:.72rem;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:env(safe-area-inset-top,0px);
+    z-index:20;
+    background:color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-block:14px;
+    gap:16px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
+  .brand-mark{width:46px; height:31px; display:block; flex:none;}
+  .brand-word{font-family:'Archivo',sans-serif; font-weight:900; font-size:1.05rem; letter-spacing:-.01em; line-height:1; color:var(--ink);}
+  .brand-word span{display:block; font-family:'Space Mono',monospace; font-weight:400; text-transform:uppercase; letter-spacing:.14em; font-size:.58rem; color:var(--ink-soft); margin-top:3px;}
+  nav.links{display:flex; gap:28px; font-size:.92rem; font-weight:500;}
+  nav.links a{text-decoration:none; color:var(--ink-soft); transition:color .15s;}
+  nav.links a:hover{color:var(--blue-deep);}
+  @media (max-width:760px){ nav.links{display:none;} }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--ink); color:var(--paper);
+    font-weight:600; font-size:.88rem;
+    padding:11px 20px; border-radius:2px;
+    text-decoration:none; border:1px solid var(--ink);
+    white-space:nowrap;
+  }
+  .btn:hover{background:var(--blue-deep); border-color:var(--blue-deep);}
+  .btn:focus-visible, a:focus-visible, button:focus-visible{outline:2px solid var(--focus); outline-offset:2px;}
+  .btn-ghost{
+    background:transparent; color:var(--ink); border:1px solid var(--line);
+  }
+  .btn-ghost:hover{border-color:var(--blue); color:var(--blue-deep); background:var(--accent-wash);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding-block:64px 56px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:center;
+  }
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr; gap:40px;} }
+  .eyebrow{
+    display:flex; align-items:center; gap:10px;
+    color:var(--blue-deep); font-weight:700; margin-bottom:18px;
+  }
+  .eyebrow .dot{width:7px;height:7px;background:var(--blue);border-radius:50%;}
+  h1.headline{
+    font-size:clamp(2.4rem, 5.2vw, 3.6rem);
+    font-weight:900; line-height:1.03; letter-spacing:-.02em;
+    color:var(--ink);
+  }
+  h1.headline em{
+    font-style:normal; color:var(--blue-deep);
+    background:linear-gradient(180deg, transparent 62%, var(--accent-wash) 62%);
+  }
+  .hero-sub{
+    margin-top:20px; font-size:1.08rem; line-height:1.6; color:var(--ink-soft);
+    max-width:46ch;
+  }
+  .hero-cta{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .hero-meta{
+    display:flex; gap:28px; margin-top:40px; flex-wrap:wrap;
+  }
+  .hero-meta div{border-left:2px solid var(--blue); padding-left:12px;}
+  .hero-meta b{display:block; font-family:'Archivo',sans-serif; font-size:1.5rem; font-weight:900;}
+  .hero-meta span{color:var(--ink-soft); font-size:.82rem;}
+
+  .hero-art{
+    position:relative; aspect-ratio:4/5; max-width:440px; margin-inline:auto; width:100%;
+    border-radius:3px; overflow:hidden; box-shadow:0 24px 48px -20px rgba(15,20,25,.35);
+  }
+  .hero-art img{width:100%; height:100%; object-fit:cover; display:block;}
+  .hero-art-tag{
+    position:absolute; left:16px; bottom:16px;
+    background:rgba(18,24,30,.72); color:#fff; backdrop-filter:blur(6px);
+    padding:8px 12px; border-radius:2px; font-size:.68rem;
+  }
+
+  /* ---------- Marquee strip ---------- */
+  .strip{
+    background:var(--ink); color:var(--paper);
+    padding-block:12px; overflow:hidden; border-bottom:1px solid var(--line);
+  }
+  .strip-inner{
+    display:flex; gap:14px; white-space:nowrap; animation:scroll 28s linear infinite;
+    font-family:'Space Mono',monospace; font-size:.78rem; letter-spacing:.08em; text-transform:uppercase;
+  }
+  .strip-inner span::after{content:"\00b7"; margin-left:14px; color:var(--blue-light); opacity:.6;}
+  .strip:hover .strip-inner{animation-play-state:paused;}
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @media (prefers-reduced-motion:reduce){ .strip-inner{animation:none; flex-wrap:wrap;} }
+
+  /* ---------- Section shell ---------- */
+  section{padding-block:76px;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+    margin-bottom:44px; flex-wrap:wrap;
+  }
+  .section-head h2{font-size:clamp(1.7rem,3.2vw,2.3rem); letter-spacing:-.01em;}
+  .section-head p{color:var(--ink-soft); max-width:40ch; margin-top:10px;}
+  .kicker{color:var(--blue-deep); font-weight:700; margin-bottom:10px; display:block;}
+
+  /* ---------- Services ---------- */
+  .services{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  @media (max-width:900px){ .services{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:520px){ .services{grid-template-columns:1fr;} }
+  .service{
+    background:var(--paper-raised); padding:28px 24px; display:flex; flex-direction:column; gap:14px;
+  }
+  .service .num{font-family:'Space Mono',monospace; color:var(--blue); font-size:.8rem;}
+  .service h3{font-size:1.08rem; font-weight:700; font-family:'Inter',sans-serif;}
+  .service p{color:var(--ink-soft); font-size:.92rem; line-height:1.55; margin:0;}
+
+  /* ---------- Process ---------- */
+  .process{background:var(--accent-wash); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:32px; position:relative;}
+  @media (max-width:900px){ .steps{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:520px){ .steps{grid-template-columns:1fr;} }
+  .step{position:relative; padding-top:8px;}
+  .step .idx{
+    font-family:'Archivo',sans-serif; font-weight:900; font-size:2.6rem; color:var(--blue-light);
+    -webkit-text-stroke:1.5px var(--blue-deep); color:transparent;
+    line-height:1; margin-bottom:14px; display:block;
+  }
+  .step h3{font-size:1rem; margin-bottom:8px;}
+  .step p{color:var(--ink-soft); font-size:.9rem; line-height:1.55; margin:0;}
+
+  /* ---------- Why / stats ---------- */
+  .why-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start;}
+  @media (max-width:860px){ .why-grid{grid-template-columns:1fr;} }
+  .why-list{display:flex; flex-direction:column; gap:22px;}
+  .why-item{display:flex; gap:16px;}
+  .why-item .mark{
+    flex:none; width:28px; height:28px; border-radius:50%;
+    background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center;
+    margin-top:2px;
+  }
+  .why-item .mark svg{width:14px; height:14px;}
+  .why-heading{font-size:clamp(1.7rem,3.2vw,2.3rem); margin-bottom:28px;}
+  .why-item h3{font-size:1rem; margin-bottom:4px;}
+  .why-item p{margin:0; color:var(--ink-soft); font-size:.92rem; line-height:1.55;}
+
+  .stat-card{
+    background:var(--ink); color:var(--paper); border-radius:3px; padding:36px 32px;
+    display:grid; grid-template-columns:1fr 1fr; gap:28px;
+  }
+  .stat b{
+    display:block; font-family:'Archivo',sans-serif; font-weight:900; font-size:2.2rem;
+    color:var(--blue-light); line-height:1;
+  }
+  .stat span{display:block; margin-top:8px; font-size:.8rem; color:#c7cdd3; line-height:1.4;}
+  .stat-card .license{
+    grid-column:1/-1; border-top:1px solid #333a42; padding-top:20px; margin-top:4px;
+    font-family:'Space Mono',monospace; font-size:.74rem; color:#9aa3ab; letter-spacing:.04em;
+  }
+
+  /* ---------- Gallery ---------- */
+  .gallery{display:grid; grid-template-columns:1.4fr 1fr 1fr; grid-template-rows:repeat(2,160px); gap:10px;}
+  @media (max-width:760px){ .gallery{grid-template-columns:1fr 1fr; grid-template-rows:repeat(3,140px);} }
+  @media (max-width:480px){ .gallery{grid-template-columns:1fr; grid-template-rows:repeat(5,160px);} }
+  .gtile{
+    border-radius:2px; position:relative; overflow:hidden;
+    display:flex; align-items:flex-end; padding:16px;
+    color:#fff; font-family:'Space Mono',monospace; font-size:.72rem; letter-spacing:.05em; text-transform:uppercase;
+  }
+  .gtile img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    transition:transform .5s ease;
+  }
+  .gtile:hover img{transform:scale(1.05);}
+  .gtile::after{content:"";position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.62), transparent 55%);}
+  .gtile span{position:relative; z-index:1;}
+  .gtile.g1{grid-row:1/3;}
+
+  /* ---------- Testimonials ---------- */
+  .quotes{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  @media (max-width:860px){ .quotes{grid-template-columns:1fr;} }
+  .quote{
+    background:var(--paper-raised); border:1px solid var(--line); border-radius:3px;
+    padding:28px; display:flex; flex-direction:column; gap:18px;
+  }
+  .quote .badge{
+    display:inline-flex; align-items:center; gap:6px;
+    color:var(--blue-deep); font-weight:700; font-size:.82rem;
+  }
+  .quote .badge svg{width:16px; height:16px; flex:none;}
+  .quote .stars{display:flex; gap:3px; color:var(--blue);}
+  .quote .stars svg{width:15px; height:15px;}
+  .quote p{margin:0; font-size:.96rem; line-height:1.6; color:var(--ink);}
+  .quote footer{font-size:.82rem; color:var(--ink-soft); font-weight:600;}
+
+  /* ---------- CTA / Contact ---------- */
+  .contact{
+    background:var(--ink); color:var(--paper);
+  }
+  .contact-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:56px;}
+  @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} }
+  .contact h2{color:var(--paper); font-size:clamp(1.8rem,3.4vw,2.4rem);}
+  .kicker-inverse{color:var(--blue-light);}
+  .contact p.lead{color:#c7cdd3; margin-top:14px; max-width:42ch; line-height:1.6;}
+  .contact-list{list-style:none; margin:32px 0 0; padding:0; display:flex; flex-direction:column; gap:18px;}
+  .contact-list li{display:flex; gap:14px; align-items:flex-start;}
+  .contact-list .ic{flex:none; width:20px; height:20px; color:var(--blue-light); margin-top:2px;}
+  .contact-list .ic svg{width:100%; height:100%; display:block;}
+  .contact-list a{text-decoration:none; color:var(--paper);}
+  .contact-list a:hover{color:var(--blue-light);}
+  .contact-list .lbl{display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:#8b939b; margin-bottom:2px;}
+
+  .form-card{
+    background:var(--paper-raised); color:var(--ink); border-radius:3px; padding:30px;
+  }
+  .form-card h3{font-size:1.1rem; margin-bottom:4px;}
+  .form-card p{color:var(--ink-soft); font-size:.88rem; margin:0 0 20px;}
+  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:16px;}
+  .field label{font-size:.78rem; font-weight:600; color:var(--ink-soft);}
+  .field input, .field select, .field textarea{
+    font:inherit; font-size:.94rem; padding:11px 12px; border:1px solid var(--line);
+    border-radius:2px; background:var(--paper); color:var(--ink); width:100%;
+  }
+  .field textarea{resize:vertical; min-height:80px;}
+  .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid var(--focus); outline-offset:1px; border-color:var(--focus);}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:420px){ .row2{grid-template-columns:1fr;} }
+  .submit-btn{
+    width:100%; background:var(--ink); color:var(--paper); border:none; border-radius:2px;
+    padding:13px; font:inherit; font-weight:700; font-size:.94rem; cursor:pointer; margin-top:4px;
+  }
+  .submit-btn:hover{background:var(--blue-deep);}
+  .form-note{font-size:.78rem; color:var(--ink-soft); margin-top:12px;}
+  .success-msg{
+    display:none; background:var(--accent-wash); border:1px solid var(--blue-light); border-radius:2px;
+    padding:14px 16px; font-size:.88rem; color:var(--blue-deep); margin-top:4px;
+  }
+  .success-msg.show{display:block;}
+
+  footer.site{
+    border-top:1px solid var(--line); padding-block:28px;
+  }
+  footer.site .wrap{
+    display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;
+  }
+  footer.site .f-brand{display:flex; align-items:center; gap:10px;}
+  footer.site .f-brand svg{width:33px; height:22px;}
+  footer.site p{margin:0; font-size:.8rem; color:var(--ink-soft);}
+</style>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <svg class="brand-mark" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Niagara Builders logo">
+        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#8DBCD7" transform="translate(42,0)"/>
+        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#76ADD0" transform="translate(30,0)"/>
+        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#5B9CC8" transform="translate(18,0)"/>
+        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#0071C8"/>
+        <rect x="26" y="19" width="219" height="366" rx="1.5" fill="var(--ink)"/>
+      </svg>
+      <span class="brand-word">Niagara Builders<span>Custom Homes &amp; Remodeling</span></span>
+    </a>
+    <nav class="links" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#work">Our Work</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn" href="#contact">Get a Quote</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow mono"><span class="dot"></span>Port Orange, FL &middot; Licensed CRC058289</div>
+        <h1 class="headline">Custom homes, built to <em>hold up</em> like they were poured yesterday &mdash; and finished twenty years ago.</h1>
+        <p class="hero-sub">Niagara Builders is a family-run general contractor serving Volusia County &mdash; new custom homes, whole-home remodels, and additions, run by the same crew from first sketch to final walkthrough.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#contact">Start Your Project</a>
+          <a class="btn btn-ghost" href="#work">See Our Work</a>
+        </div>
+        <div class="hero-meta">
+          <div><b>25+</b><span>Years Building in Volusia County</span></div>
+          <div><b>10+</b><span>Permitted Projects on Record</span></div>
+          <div><b>99</b><span>BuildZoom Contractor Score</span></div>
+        </div>
+      </div>
+      <div class="hero-art">
+        <img src="photos/exterior-modern.jpg" alt="Recently completed custom waterfront home by Niagara Builders">
+        <div class="hero-art-tag mono">Recently Completed &middot; Port Orange, FL</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip" aria-hidden="true">
+    <div class="strip-inner">
+      <span>New Custom Homes</span>
+      <span>Whole-Home Remodels</span>
+      <span>Kitchen &amp; Bath</span>
+      <span>Home Additions</span>
+      <span>Licensed &amp; Insured &mdash; CRC058289</span>
+      <span>New Custom Homes</span>
+      <span>Whole-Home Remodels</span>
+      <span>Kitchen &amp; Bath</span>
+      <span>Home Additions</span>
+      <span>Licensed &amp; Insured &mdash; CRC058289</span>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker mono">What We Build</span>
+          <h2>One crew, every phase of the project.</h2>
+        </div>
+        <p>From a bare lot to a finished punch list, we keep the same estimator, the same foreman, and the same subs on site from day one.</p>
+      </div>
+      <div class="services">
+        <div class="service">
+          <span class="num mono">01</span>
+          <h3>Custom Home Building</h3>
+          <p>Ground-up single-family homes, traditional and contemporary, designed and permitted through Volusia County before the first stake goes in the ground.</p>
+        </div>
+        <div class="service">
+          <span class="num mono">02</span>
+          <h3>Whole-Home Remodeling</h3>
+          <p>Full interior renovations that touch every room &mdash; layout changes, structural work, and finishes handled under one contract.</p>
+        </div>
+        <div class="service">
+          <span class="num mono">03</span>
+          <h3>Kitchen &amp; Bath</h3>
+          <p>Gut renovations and refreshes for the two rooms that sell a home &mdash; cabinetry, tile, plumbing rough-in, and electrical done right the first time.</p>
+        </div>
+        <div class="service">
+          <span class="num mono">04</span>
+          <h3>Additions &amp; Expansions</h3>
+          <p>Room additions, second stories, and garage conversions engineered to match your home's existing structure and roofline.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process" id="process">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker mono">How A Project Runs</span>
+          <h2>Four phases. No surprises in between.</h2>
+        </div>
+        <p>You get a single point of contact through design, permitting, construction, and closeout &mdash; not a rotating cast of subcontractors.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="idx">01</span>
+          <h3>Design &amp; Estimate</h3>
+          <p>We walk the site, scope the work, and return a detailed written estimate &mdash; no vague allowances buried in the fine print.</p>
+        </div>
+        <div class="step">
+          <span class="idx">02</span>
+          <h3>Permitting</h3>
+          <p>We pull and manage every Volusia County permit under our license, so nothing stalls your project at the inspection stage.</p>
+        </div>
+        <div class="step">
+          <span class="idx">03</span>
+          <h3>Construction</h3>
+          <p>Our own crew and vetted trade partners execute the build, with a weekly check-in so you always know where the schedule stands.</p>
+        </div>
+        <div class="step">
+          <span class="idx">04</span>
+          <h3>Final Walkthrough</h3>
+          <p>We punch out every detail together before we call it done &mdash; and stand behind the work after the crew leaves.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="wrap why-grid">
+      <div>
+        <span class="kicker mono">Why Niagara</span>
+        <h2 class="why-heading">Built by a crew that's stayed in Port Orange for 25 years.</h2>
+        <div class="why-list">
+          <div class="why-item">
+            <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <div><h3>Licensed Certified Residential Contractor</h3><p>Active Florida license CRC058289 &mdash; every project is pulled, inspected, and closed out under our own permit.</p></div>
+          </div>
+          <div class="why-item">
+            <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <div><h3>One estimator, start to finish</h3><p>The person who quotes your job is the person who manages it &mdash; no handoff to a stranger once the contract is signed.</p></div>
+          </div>
+          <div class="why-item">
+            <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <div><h3>Local knowledge that saves you money</h3><p>Two decades of Volusia County permitting means fewer surprises with inspections, flood zones, and setback rules.</p></div>
+          </div>
+          <div class="why-item">
+            <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <div><h3>Written, itemized estimates</h3><p>You'll know what you're paying for before a single wall comes down &mdash; no verbal promises, no vague allowances.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat"><b>1998</b><span>Founded &amp; incorporated in Port Orange, FL</span></div>
+        <div class="stat"><b>99/100</b><span>BuildZoom contractor score &mdash; top 15% statewide</span></div>
+        <div class="stat"><b>$525K+</b><span>Recent new-construction project value on record</span></div>
+        <div class="stat"><b>32128</b><span>Proudly based &amp; building in Port Orange</span></div>
+        <div class="license">LIC. CRC058289 &middot; NIAGARA BUILDERS INC. &middot; 1885 SPRUCE CREEK BLVD, PORT ORANGE, FL</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker mono">Recent Work</span>
+          <h2>A waterfront custom build, start to finish.</h2>
+        </div>
+        <p>A recently completed new-construction home on the Intracoastal &mdash; from framing through final landscaping, built and managed by our crew.</p>
+      </div>
+      <div class="gallery">
+        <div class="gtile g1"><img src="photos/pool.jpg" alt="Backyard pool and spillover spa overlooking the Intracoastal Waterway"><span>Pool &amp; Spa &middot; Intracoastal Views</span></div>
+        <div class="gtile g2"><img src="photos/kitchen.jpg" alt="White kitchen remodel with quartz waterfall island and built-in wine fridge"><span>Kitchen &middot; Quartz &amp; Custom Cabinetry</span></div>
+        <div class="gtile g3"><img src="photos/exterior-rear.jpg" alt="Rear exterior of coastal home with spiral staircase to upper deck"><span>Exterior &middot; Coastal Elevation</span></div>
+        <div class="gtile g4"><img src="photos/exterior-modern.jpg" alt="Two-story custom home exterior with metal hip roofs and second-floor balcony"><span>New Construction &middot; Waterfront Home</span></div>
+        <div class="gtile g5"><img src="photos/lanai.jpg" alt="Covered lanai seating area overlooking the pool and waterway"><span>Outdoor Living &middot; Covered Lanai</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker mono">Reputation</span>
+          <h2>What building in Volusia County for 25 years earns you.</h2>
+        </div>
+      </div>
+      <div class="quotes">
+        <div class="quote">
+          <div class="stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 15 9l7 1-5.2 4.9L18.2 22 12 18.3 5.8 22 7.2 14.9 2 10l7-1Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 15 9l7 1-5.2 4.9L18.2 22 12 18.3 5.8 22 7.2 14.9 2 10l7-1Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 15 9l7 1-5.2 4.9L18.2 22 12 18.3 5.8 22 7.2 14.9 2 10l7-1Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 15 9l7 1-5.2 4.9L18.2 22 12 18.3 5.8 22 7.2 14.9 2 10l7-1Z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 15 9l7 1-5.2 4.9L18.2 22 12 18.3 5.8 22 7.2 14.9 2 10l7-1Z"/></svg>
+          </div>
+          <p>"A BuildZoom score of 99 puts Niagara Builders above 85% of licensed contractors in Florida &mdash; one of the highest-rated general contractors in Volusia County."</p>
+          <footer>BuildZoom Contractor Rating</footer>
+        </div>
+        <div class="quote">
+          <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5.5v6c0 5 3.4 8.7 8 10.5 4.6-1.8 8-5.5 8-10.5v-6Z"/><path d="m9 12 2 2 4-4"/></svg>Active &amp; Verified</div>
+          <p>"License CRC058289 has been active and in good standing throughout Niagara Builders' history as a Certified Residential Contractor in the State of Florida."</p>
+          <footer>Florida DBPR License Record</footer>
+        </div>
+        <div class="quote">
+          <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>Established 1998</div>
+          <p>"Incorporated in Port Orange in 1998 and still building in the same community more than 25 years later &mdash; same address, same commitment to the trade."</p>
+          <footer>Florida Division of Corporations</footer>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="kicker mono kicker-inverse">Get Started</span>
+        <h2>Tell us about your project.</h2>
+        <p class="lead">Whether it's a full custom build or a single-room remodel, send us the details and we'll follow up with next steps and a timeline for an on-site estimate.</p>
+        <ul class="contact-list">
+          <li>
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+            <div><span class="lbl">Call or Text</span><a href="tel:+13864058308">(386) 405-8308</a></div>
+          </li>
+          <li>
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+            <div><span class="lbl">Email</span><a href="mailto:Niagara510@aol.com">Niagara510@aol.com</a></div>
+          </li>
+          <li>
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <div><span class="lbl">Based In</span><span>Port Orange, FL 32128</span></div>
+          </li>
+          <li>
+            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5.5v6c0 5 3.4 8.7 8 10.5 4.6-1.8 8-5.5 8-10.5v-6Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <div><span class="lbl">Licensed</span><span>Florida CRC058289 &mdash; Certified Residential Contractor</span></div>
+          </li>
+        </ul>
+      </div>
+
+      <form class="form-card" id="quote-form">
+        <h3>Request a free estimate</h3>
+        <p>We typically reply within one business day.</p>
+
+        <div class="row2">
+          <div class="field">
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" required autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email">
+        </div>
+
+        <div class="field">
+          <label for="project-type">Project type</label>
+          <select id="project-type" name="project-type">
+            <option>New custom home</option>
+            <option>Whole-home remodel</option>
+            <option>Kitchen or bath remodel</option>
+            <option>Home addition</option>
+            <option>Other / not sure yet</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="details">Project details</label>
+          <textarea id="details" name="details" placeholder="Property address, rough scope, timeline..."></textarea>
+        </div>
+
+        <button class="submit-btn" type="submit">Request Estimate</button>
+        <p class="form-note">By submitting, you agree to be contacted about your project by phone, text, or email.</p>
+        <div class="success-msg" id="success-msg">Thanks &mdash; your request has been noted. Niagara Builders will follow up at the phone or email you provided.</div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="f-brand">
+      <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#8DBCD7" transform="translate(42,0)"/>
+        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#76ADD0" transform="translate(30,0)"/>
+        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#5B9CC8" transform="translate(18,0)"/>
+        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#0071C8"/>
+        <rect x="26" y="19" width="219" height="366" rx="1.5" fill="var(--ink)"/>
+      </svg>
+      <p>&copy; 2026 Niagara Builders Inc. &middot; Lic. CRC058289 &middot; Port Orange, FL</p>
+    </div>
+    <p>1885 Spruce Creek Blvd, Port Orange, FL 32128 &middot; (386) 405-8308</p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var form = document.getElementById('quote-form');
+    var success = document.getElementById('success-msg');
+    if(!form) return;
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      success.classList.add('show');
+      form.reset();
+    });
+  })();
+</script>
