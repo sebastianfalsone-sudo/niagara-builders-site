@@ -3,41 +3,44 @@
   @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
 
   :root{
-    --ink:#1a1d21;
-    --ink-soft:#484e55;
-    --paper:#f6f4ef;
-    --paper-raised:#ffffff;
-    --line:#dcd8cf;
-    --blue:#1f7fd1;
-    --blue-deep:#155a9c;
-    --blue-light:#8fcaf0;
-    --accent-wash:#eaf3fb;
-    --focus:#155a9c;
+    --ink:#eef4fb;
+    --ink-soft:#a9bcdb;
+    --paper:#0a2757;
+    --paper-raised:#123268;
+    --paper-deep:#071c40;
+    --line:#25417f;
+    --blue:#4fa6ea;
+    --blue-deep:#8fcaf0;
+    --blue-light:#bfe0f7;
+    --accent-wash:#0f3572;
+    --focus:#8fcaf0;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --ink:#eef1f4;
-      --ink-soft:#b7bec6;
-      --paper:#12181e;
-      --paper-raised:#182430;
-      --line:#2a3542;
+      --ink:#eef4fb;
+      --ink-soft:#94a9cc;
+      --paper:#071c40;
+      --paper-raised:#0f2c5e;
+      --paper-deep:#04122b;
+      --line:#1e3868;
       --blue:#5fa8e6;
       --blue-deep:#8fcaf0;
-      --blue-light:#3a6c93;
-      --accent-wash:#182b3a;
+      --blue-light:#bfe0f7;
+      --accent-wash:#0c2a5c;
       --focus:#8fcaf0;
     }
   }
   :root[data-theme="dark"]{
-    --ink:#eef1f4;
-    --ink-soft:#b7bec6;
-    --paper:#12181e;
-    --paper-raised:#182430;
-    --line:#2a3542;
+    --ink:#eef4fb;
+    --ink-soft:#94a9cc;
+    --paper:#071c40;
+    --paper-raised:#0f2c5e;
+    --paper-deep:#04122b;
+    --line:#1e3868;
     --blue:#5fa8e6;
     --blue-deep:#8fcaf0;
-    --blue-light:#3a6c93;
-    --accent-wash:#182b3a;
+    --blue-light:#bfe0f7;
+    --accent-wash:#0c2a5c;
     --focus:#8fcaf0;
   }
 
@@ -90,10 +93,10 @@
   @media (max-width:760px){ nav.links{display:none;} }
   .btn{
     display:inline-flex; align-items:center; gap:8px;
-    background:var(--ink); color:var(--paper);
-    font-weight:600; font-size:.88rem;
+    background:var(--blue); color:var(--paper-deep);
+    font-weight:700; font-size:.88rem;
     padding:11px 20px; border-radius:2px;
-    text-decoration:none; border:1px solid var(--ink);
+    text-decoration:none; border:1px solid var(--blue);
     white-space:nowrap;
   }
   .btn:hover{background:var(--blue-deep); border-color:var(--blue-deep);}
@@ -153,7 +156,7 @@
 
   /* ---------- Marquee strip ---------- */
   .strip{
-    background:var(--ink); color:var(--paper);
+    background:var(--paper-deep); color:var(--ink);
     padding-block:12px; overflow:hidden; border-bottom:1px solid var(--line);
   }
   .strip-inner{
@@ -219,17 +222,18 @@
   .why-item p{margin:0; color:var(--ink-soft); font-size:.92rem; line-height:1.55;}
 
   .stat-card{
-    background:var(--ink); color:var(--paper); border-radius:3px; padding:36px 32px;
+    background:var(--paper-deep); color:var(--ink); border-radius:3px; padding:36px 32px;
     display:grid; grid-template-columns:1fr 1fr; gap:28px;
+    border:1px solid var(--line);
   }
   .stat b{
     display:block; font-family:'Archivo',sans-serif; font-weight:900; font-size:2.2rem;
     color:var(--blue-light); line-height:1;
   }
-  .stat span{display:block; margin-top:8px; font-size:.8rem; color:#c7cdd3; line-height:1.4;}
+  .stat span{display:block; margin-top:8px; font-size:.8rem; color:var(--ink-soft); line-height:1.4;}
   .stat-card .license{
-    grid-column:1/-1; border-top:1px solid #333a42; padding-top:20px; margin-top:4px;
-    font-family:'Space Mono',monospace; font-size:.74rem; color:#9aa3ab; letter-spacing:.04em;
+    grid-column:1/-1; border-top:1px solid var(--line); padding-top:20px; margin-top:4px;
+    font-family:'Space Mono',monospace; font-size:.74rem; color:var(--ink-soft); letter-spacing:.04em;
   }
 
   /* ---------- Gallery ---------- */
@@ -269,23 +273,24 @@
 
   /* ---------- CTA / Contact ---------- */
   .contact{
-    background:var(--ink); color:var(--paper);
+    background:var(--paper-deep); color:var(--ink);
   }
   .contact-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:56px;}
   @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} }
-  .contact h2{color:var(--paper); font-size:clamp(1.8rem,3.4vw,2.4rem);}
+  .contact h2{color:var(--ink); font-size:clamp(1.8rem,3.4vw,2.4rem);}
   .kicker-inverse{color:var(--blue-light);}
-  .contact p.lead{color:#c7cdd3; margin-top:14px; max-width:42ch; line-height:1.6;}
+  .contact p.lead{color:var(--ink-soft); margin-top:14px; max-width:42ch; line-height:1.6;}
   .contact-list{list-style:none; margin:32px 0 0; padding:0; display:flex; flex-direction:column; gap:18px;}
   .contact-list li{display:flex; gap:14px; align-items:flex-start;}
   .contact-list .ic{flex:none; width:20px; height:20px; color:var(--blue-light); margin-top:2px;}
   .contact-list .ic svg{width:100%; height:100%; display:block;}
-  .contact-list a{text-decoration:none; color:var(--paper);}
+  .contact-list a{text-decoration:none; color:var(--ink);}
   .contact-list a:hover{color:var(--blue-light);}
-  .contact-list .lbl{display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:#8b939b; margin-bottom:2px;}
+  .contact-list .lbl{display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); margin-bottom:2px;}
 
   .form-card{
     background:var(--paper-raised); color:var(--ink); border-radius:3px; padding:30px;
+    border:1px solid var(--line);
   }
   .form-card h3{font-size:1.1rem; margin-bottom:4px;}
   .form-card p{color:var(--ink-soft); font-size:.88rem; margin:0 0 20px;}
@@ -293,21 +298,21 @@
   .field label{font-size:.78rem; font-weight:600; color:var(--ink-soft);}
   .field input, .field select, .field textarea{
     font:inherit; font-size:.94rem; padding:11px 12px; border:1px solid var(--line);
-    border-radius:2px; background:var(--paper); color:var(--ink); width:100%;
+    border-radius:2px; background:var(--paper-deep); color:var(--ink); width:100%;
   }
   .field textarea{resize:vertical; min-height:80px;}
   .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid var(--focus); outline-offset:1px; border-color:var(--focus);}
   .row2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
   @media (max-width:420px){ .row2{grid-template-columns:1fr;} }
   .submit-btn{
-    width:100%; background:var(--ink); color:var(--paper); border:none; border-radius:2px;
+    width:100%; background:var(--blue); color:var(--paper-deep); border:none; border-radius:2px;
     padding:13px; font:inherit; font-weight:700; font-size:.94rem; cursor:pointer; margin-top:4px;
   }
   .submit-btn:hover{background:var(--blue-deep);}
   .form-note{font-size:.78rem; color:var(--ink-soft); margin-top:12px;}
   .success-msg{
     display:none; background:var(--accent-wash); border:1px solid var(--blue-light); border-radius:2px;
-    padding:14px 16px; font-size:.88rem; color:var(--blue-deep); margin-top:4px;
+    padding:14px 16px; font-size:.88rem; color:var(--blue-light); margin-top:4px;
   }
   .success-msg.show{display:block;}
 
@@ -330,7 +335,7 @@
         <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#76ADD0" transform="translate(30,0)"/>
         <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#5B9CC8" transform="translate(18,0)"/>
         <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#0071C8"/>
-        <rect x="26" y="19" width="219" height="366" rx="1.5" fill="var(--ink)"/>
+        <rect x="26" y="19" width="219" height="366" rx="1.5" fill="#050d1f"/>
       </svg>
       <span class="brand-word">Niagara Builders<span>Custom Homes &amp; Remodeling</span></span>
     </a>
@@ -619,7 +624,7 @@
         <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#76ADD0" transform="translate(30,0)"/>
         <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#5B9CC8" transform="translate(18,0)"/>
         <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#0071C8"/>
-        <rect x="26" y="19" width="219" height="366" rx="1.5" fill="var(--ink)"/>
+        <rect x="26" y="19" width="219" height="366" rx="1.5" fill="#050d1f"/>
       </svg>
       <p>&copy; 2026 Niagara Builders Inc. &middot; Lic. CRC058289 &middot; Port Orange, FL</p>
     </div>
