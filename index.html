@@ -42,6 +42,8 @@
   }
 
   *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} }
   body{
     margin:0;
     background:var(--paper);
@@ -50,6 +52,7 @@
     -webkit-font-smoothing:antialiased;
     padding-inline:0;
   }
+  main#top, section[id]{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 76px);}
   img{max-width:100%;}
   h1,h2,h3{font-family:'Archivo',system-ui,sans-serif;text-wrap:balance;margin:0;}
   a{color:inherit;}
