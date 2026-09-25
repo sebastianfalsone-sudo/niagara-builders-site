@@ -177,17 +177,16 @@
 
   /* ---------- Services ---------- */
   .services{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
     background:var(--line); border:1px solid var(--line);
   }
-  @media (max-width:900px){ .services{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:520px){ .services{grid-template-columns:1fr;} }
+  @media (max-width:640px){ .services{grid-template-columns:1fr;} }
   .service{
-    background:var(--paper-raised); padding:28px 24px; display:flex; flex-direction:column; gap:14px;
+    background:var(--paper-raised); padding:36px 32px; display:flex; flex-direction:column; gap:14px;
   }
   .service .num{font-family:'Space Mono',monospace; color:var(--blue); font-size:.8rem;}
-  .service h3{font-size:1.08rem; font-weight:700; font-family:'Inter',sans-serif;}
-  .service p{color:var(--ink-soft); font-size:.92rem; line-height:1.55; margin:0;}
+  .service h3{font-size:1.3rem; font-weight:700; font-family:'Archivo',sans-serif;}
+  .service p{color:var(--ink-soft); font-size:.96rem; line-height:1.6; margin:0; max-width:38ch;}
 
   /* ---------- Process ---------- */
   .process{background:var(--accent-wash); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
@@ -297,8 +296,6 @@
   }
   .field textarea{resize:vertical; min-height:80px;}
   .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid var(--focus); outline-offset:1px; border-color:var(--focus);}
-  .row2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
-  @media (max-width:420px){ .row2{grid-template-columns:1fr;} }
   .submit-btn{
     width:100%; background:var(--ink); color:var(--paper); border:none; border-radius:2px;
     padding:13px; font:inherit; font-weight:700; font-size:.94rem; cursor:pointer; margin-top:4px;
@@ -332,7 +329,7 @@
         <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#0071C8"/>
         <rect x="26" y="19" width="219" height="366" rx="1.5" fill="var(--ink)"/>
       </svg>
-      <span class="brand-word">Niagara Builders<span>Custom Homes &amp; Remodeling</span></span>
+      <span class="brand-word">Niagara Builders<span>High-End Custom Homes</span></span>
     </a>
     <nav class="links" aria-label="Primary">
       <a href="#services">Services</a>
@@ -341,7 +338,7 @@
       <a href="#reviews">Reviews</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a class="btn" href="#contact">Get a Quote</a>
+    <a class="btn" href="#contact">Get in Contact</a>
   </div>
 </header>
 
@@ -352,9 +349,9 @@
       <div>
         <div class="eyebrow mono"><span class="dot"></span>Port Orange, FL &middot; Licensed CRC058289</div>
         <h1 class="headline">Custom homes, built to <em>hold up</em> like they were poured yesterday &mdash; and finished twenty years ago.</h1>
-        <p class="hero-sub">Niagara Builders is a family-run general contractor serving Volusia County &mdash; new custom homes, whole-home remodels, and additions, run by the same crew from first sketch to final walkthrough.</p>
+        <p class="hero-sub">Niagara Builders is a family-run general contractor in Volusia County, taking on a select number of high-end custom homes and full remodels each year &mdash; run by the same crew from first sketch to final walkthrough.</p>
         <div class="hero-cta">
-          <a class="btn" href="#contact">Start Your Project</a>
+          <a class="btn" href="#contact">Get in Contact</a>
           <a class="btn btn-ghost" href="#work">See Our Work</a>
         </div>
         <div class="hero-meta">
@@ -372,16 +369,14 @@
 
   <div class="strip" aria-hidden="true">
     <div class="strip-inner">
-      <span>New Custom Homes</span>
-      <span>Whole-Home Remodels</span>
-      <span>Kitchen &amp; Bath</span>
-      <span>Home Additions</span>
+      <span>High-End Custom Homes</span>
+      <span>Full Home Remodels</span>
       <span>Licensed &amp; Insured &mdash; CRC058289</span>
-      <span>New Custom Homes</span>
-      <span>Whole-Home Remodels</span>
-      <span>Kitchen &amp; Bath</span>
-      <span>Home Additions</span>
+      <span>Volusia County, FL</span>
+      <span>High-End Custom Homes</span>
+      <span>Full Home Remodels</span>
       <span>Licensed &amp; Insured &mdash; CRC058289</span>
+      <span>Volusia County, FL</span>
     </div>
   </div>
 
@@ -390,30 +385,20 @@
       <div class="section-head">
         <div>
           <span class="kicker mono">What We Build</span>
-          <h2>One crew, every phase of the project.</h2>
+          <h2>Two disciplines. Full attention on each.</h2>
         </div>
-        <p>From a bare lot to a finished punch list, we keep the same estimator, the same foreman, and the same subs on site from day one.</p>
+        <p>We take on a limited number of projects each year &mdash; high-end custom homes and full remodels &mdash; so every job gets the same estimator, the same foreman, and the same crew from day one.</p>
       </div>
       <div class="services">
         <div class="service">
           <span class="num mono">01</span>
-          <h3>Custom Home Building</h3>
-          <p>Ground-up single-family homes, traditional and contemporary, designed and permitted through Volusia County before the first stake goes in the ground.</p>
+          <h3>High-End Custom Homes</h3>
+          <p>Ground-up single-family homes built to a high standard of finish, designed and permitted through Volusia County before the first stake goes in the ground.</p>
         </div>
         <div class="service">
           <span class="num mono">02</span>
-          <h3>Whole-Home Remodeling</h3>
-          <p>Full interior renovations that touch every room &mdash; layout changes, structural work, and finishes handled under one contract.</p>
-        </div>
-        <div class="service">
-          <span class="num mono">03</span>
-          <h3>Kitchen &amp; Bath</h3>
-          <p>Gut renovations and refreshes for the two rooms that sell a home &mdash; cabinetry, tile, plumbing rough-in, and electrical done right the first time.</p>
-        </div>
-        <div class="service">
-          <span class="num mono">04</span>
-          <h3>Additions &amp; Expansions</h3>
-          <p>Room additions, second stories, and garage conversions engineered to match your home's existing structure and roofline.</p>
+          <h3>Full Home Remodels</h3>
+          <p>Complete, whole-home renovations &mdash; layout changes, structural work, and finishes handled under one contract, top to bottom.</p>
         </div>
       </div>
     </div>
@@ -545,12 +530,8 @@
       <div>
         <span class="kicker mono kicker-inverse">Get Started</span>
         <h2>Tell us about your project.</h2>
-        <p class="lead">Whether it's a full custom build or a single-room remodel, send us the details and we'll follow up with next steps and a timeline for an on-site estimate.</p>
+        <p class="lead">We take on a limited number of custom homes and full remodels each year. Send us the details and we'll follow up with next steps and a timeline for an on-site estimate.</p>
         <ul class="contact-list">
-          <li>
-            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-            <div><span class="lbl">Call or Text</span><a href="tel:+13864058308">(386) 405-8308</a></div>
-          </li>
           <li>
             <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
             <div><span class="lbl">Email</span><a href="mailto:Niagara510@aol.com">Niagara510@aol.com</a></div>
@@ -570,15 +551,9 @@
         <h3>Request a free estimate</h3>
         <p>We typically reply within one business day.</p>
 
-        <div class="row2">
-          <div class="field">
-            <label for="name">Full name</label>
-            <input id="name" name="name" type="text" required autocomplete="name">
-          </div>
-          <div class="field">
-            <label for="phone">Phone</label>
-            <input id="phone" name="phone" type="tel" required autocomplete="tel">
-          </div>
+        <div class="field">
+          <label for="name">Full name</label>
+          <input id="name" name="name" type="text" required autocomplete="name">
         </div>
 
         <div class="field">
@@ -589,10 +564,8 @@
         <div class="field">
           <label for="project-type">Project type</label>
           <select id="project-type" name="project-type">
-            <option>New custom home</option>
-            <option>Whole-home remodel</option>
-            <option>Kitchen or bath remodel</option>
-            <option>Home addition</option>
+            <option>High-end custom home</option>
+            <option>Full home remodel</option>
             <option>Other / not sure yet</option>
           </select>
         </div>
@@ -603,8 +576,8 @@
         </div>
 
         <button class="submit-btn" type="submit">Request Estimate</button>
-        <p class="form-note">By submitting, you agree to be contacted about your project by phone, text, or email.</p>
-        <div class="success-msg" id="success-msg">Thanks &mdash; your request has been noted. Niagara Builders will follow up at the phone or email you provided.</div>
+        <p class="form-note">By submitting, you agree to be contacted about your project by email.</p>
+        <div class="success-msg" id="success-msg">Thanks &mdash; your request has been noted. Niagara Builders will follow up at the email you provided.</div>
       </form>
     </div>
   </section>
@@ -623,7 +596,7 @@
       </svg>
       <p>&copy; 2026 Niagara Builders Inc. &middot; Lic. CRC058289 &middot; Port Orange, FL</p>
     </div>
-    <p>1885 Spruce Creek Blvd, Port Orange, FL 32128 &middot; (386) 405-8308</p>
+    <p>1885 Spruce Creek Blvd, Port Orange, FL 32128</p>
   </div>
 </footer>
 
