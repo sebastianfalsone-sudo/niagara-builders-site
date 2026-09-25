@@ -194,8 +194,8 @@
 
   /* ---------- Process ---------- */
   .process{background:var(--accent-wash); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:32px; position:relative;}
-  @media (max-width:900px){ .steps{grid-template-columns:repeat(2,1fr);} }
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:36px 32px; position:relative;}
+  @media (max-width:760px){ .steps{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:520px){ .steps{grid-template-columns:1fr;} }
   .step{position:relative; padding-top:8px;}
   .step .idx{
@@ -205,6 +205,10 @@
   }
   .step h3{font-size:1rem; margin-bottom:8px;}
   .step p{color:var(--ink-soft); font-size:.9rem; line-height:1.55; margin:0;}
+  .process-note{
+    margin-top:48px; padding-top:28px; border-top:1px solid var(--line);
+    color:var(--ink-soft); font-size:.94rem; line-height:1.6; max-width:60ch;
+  }
 
   /* ---------- Why / stats ---------- */
   .why-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:stretch;}
@@ -442,32 +446,43 @@
       <div class="section-head">
         <div>
           <span class="kicker mono">How A Project Runs</span>
-          <h2>Four phases. No surprises in between.</h2>
+          <h2>From a first walkthrough to a signed contract.</h2>
         </div>
-        <p>You get a single point of contact through design, permitting, construction, and closeout &mdash; not a rotating cast of subcontractors.</p>
+        <p>The same process we've used since 1998 &mdash; personal from the first meeting, and backed by an architect once the design gets serious.</p>
       </div>
       <div class="steps">
         <div class="step">
           <span class="idx">01</span>
-          <h3>Design &amp; Estimate</h3>
-          <p>We walk the site, scope the work, and return a detailed written estimate &mdash; no vague allowances buried in the fine print.</p>
+          <h3>Walk a Home Together</h3>
+          <p>We usually meet on-site &mdash; a home we have under construction, or one we've finished &mdash; to talk through what you're after and any plans you already have.</p>
         </div>
         <div class="step">
           <span class="idx">02</span>
-          <h3>Permitting</h3>
-          <p>We pull and manage every Volusia County permit under our license, so nothing stalls your project at the inspection stage.</p>
+          <h3>Talk to Past Clients</h3>
+          <p>If you'd like to hear about the experience firsthand, we'll put you in touch with homeowners we've built for.</p>
         </div>
         <div class="step">
           <span class="idx">03</span>
-          <h3>Construction</h3>
-          <p>Our own crew and vetted trade partners execute the build, with a weekly check-in so you always know where the schedule stands.</p>
+          <h3>Trade Design Ideas</h3>
+          <p>We go back and forth by email, sharing ideas and references, until the direction for the home starts to take shape.</p>
         </div>
         <div class="step">
           <span class="idx">04</span>
-          <h3>Final Walkthrough</h3>
-          <p>We punch out every detail together before we call it done &mdash; and stand behind the work after the crew leaves.</p>
+          <h3>Sit Down With Our Architect</h3>
+          <p>Our architect, Ray, joins the process &mdash; a sit-down at his office or on-site to finalize the design and engineering.</p>
+        </div>
+        <div class="step">
+          <span class="idx">05</span>
+          <h3>Price It &amp; Sign</h3>
+          <p>Once we have a full set of drawings, we send them out for pricing, compile the contract, and get it signed.</p>
+        </div>
+        <div class="step">
+          <span class="idx">06</span>
+          <h3>Permit &amp; Build</h3>
+          <p>We pull permits and start construction. On remodels, Ray comes back to the job site any time new design elements need engineering.</p>
         </div>
       </div>
+      <p class="process-note">Most custom homes run on a fixed contract. Large remodels are usually billed cost-plus, which tends to serve those projects better as the scope evolves on-site.</p>
     </div>
   </section>
 
