@@ -219,16 +219,26 @@
 
   .stat-card{
     background:var(--ink); color:var(--paper); border-radius:3px; padding:36px 32px;
-    display:grid; grid-template-columns:1fr 1fr; gap:28px;
+    display:flex; flex-direction:column;
   }
+  .stat{
+    display:flex; align-items:baseline; gap:20px;
+    padding-block:20px; border-top:1px solid #333a42;
+  }
+  .stat:first-child{border-top:none; padding-top:0;}
   .stat b{
-    display:block; font-family:'Archivo',sans-serif; font-weight:900; font-size:2.2rem;
+    flex:none; width:108px;
+    font-family:'Archivo',sans-serif; font-weight:900; font-size:2rem;
     color:var(--blue-light); line-height:1;
   }
-  .stat span{display:block; margin-top:8px; font-size:.8rem; color:#c7cdd3; line-height:1.4;}
+  .stat span{font-size:.86rem; color:#c7cdd3; line-height:1.5;}
   .stat-card .license{
-    grid-column:1/-1; border-top:1px solid #333a42; padding-top:20px; margin-top:4px;
+    border-top:1px solid #333a42; padding-top:20px; margin-top:20px;
     font-family:'Space Mono',monospace; font-size:.74rem; color:#9aa3ab; letter-spacing:.04em;
+  }
+  @media (max-width:420px){
+    .stat{flex-direction:column; align-items:flex-start; gap:6px;}
+    .stat b{width:auto;}
   }
 
   /* ---------- Gallery ---------- */
@@ -484,7 +494,6 @@
       <div class="stat-card">
         <div class="stat"><b>1998</b><span>Founded &amp; incorporated in Port Orange, FL</span></div>
         <div class="stat"><b>99/100</b><span>BuildZoom contractor score &mdash; top 15% statewide</span></div>
-        <div class="stat"><b>Select</b><span>A limited number of projects taken on each year</span></div>
         <div class="stat"><b>32128</b><span>Proudly based &amp; building in Port Orange</span></div>
         <div class="license">LIC. CRC058289 &middot; NIAGARA BUILDERS INC. &middot; PORT ORANGE, FL</div>
       </div>
