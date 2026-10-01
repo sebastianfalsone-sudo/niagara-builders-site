@@ -257,7 +257,9 @@
     border-radius:2px; position:relative; overflow:hidden;
     display:flex; align-items:flex-end; padding:16px;
     color:#fff; font-family:'Space Mono',monospace; font-size:.72rem; letter-spacing:.05em; text-transform:uppercase;
+    border:none; margin:0; width:100%; height:100%; cursor:pointer; text-align:left; font:inherit;
   }
+  .gtile:focus-visible{outline:2px solid var(--focus); outline-offset:2px;}
   .gtile img{
     position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     transition:transform .5s ease;
@@ -266,6 +268,55 @@
   .gtile::after{content:"";position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.62), transparent 55%);}
   .gtile span{position:relative; z-index:1;}
   .gtile.g1{grid-row:1/3;}
+  .gtile-more::before{
+    content:""; position:absolute; inset:0; background:rgba(10,15,20,.58); z-index:1;
+  }
+  .gtile-more:hover::before{background:rgba(10,15,20,.68);}
+  .gtile-more-label{
+    font-size:.98rem; font-weight:700; letter-spacing:.02em; line-height:1.4;
+    text-transform:none; font-family:'Archivo',sans-serif;
+  }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(8,10,13,.94);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; visibility:hidden; transition:opacity .2s ease;
+    padding:env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px);
+  }
+  .lightbox.open{opacity:1; visibility:visible;}
+  .lb-figure{
+    margin:0; max-width:min(1100px,92vw); max-height:86vh;
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+  }
+  .lb-figure img{
+    max-width:100%; max-height:74vh; object-fit:contain;
+    border-radius:3px; display:block;
+  }
+  .lb-figure figcaption{
+    color:#fff; font-size:.92rem; text-align:center; max-width:60ch;
+    font-family:'Inter',sans-serif;
+  }
+  .lb-close, .lb-nav{
+    position:fixed; background:rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.18);
+    border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:background .15s;
+  }
+  .lb-close svg, .lb-nav svg{width:20px; height:20px;}
+  .lb-close:hover, .lb-nav:hover{background:rgba(255,255,255,.18);}
+  .lb-close{top:calc(env(safe-area-inset-top,0px) + 20px); right:20px;}
+  .lb-prev{left:20px; top:50%; transform:translateY(-50%);}
+  .lb-next{right:20px; top:50%; transform:translateY(-50%);}
+  .lb-counter{
+    position:fixed; bottom:calc(env(safe-area-inset-bottom,0px) + 20px); left:50%; transform:translateX(-50%);
+    color:#fff; opacity:.7;
+  }
+  @media (max-width:640px){
+    .lb-prev{left:8px;} .lb-next{right:8px;}
+    .lb-close{right:8px;}
+    .lb-close, .lb-nav{width:38px; height:38px;}
+  }
 
   /* ---------- Testimonials ---------- */
   .quotes{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
@@ -379,7 +430,7 @@
         </div>
       </div>
       <div class="hero-art">
-        <img src="photos/exterior-modern.jpg" alt="Recently completed custom waterfront home by Niagara Builders">
+        <img src="photos/hero.jpg" alt="Recently completed custom home by Niagara Builders with job-site sign">
         <div class="hero-art-tag mono">Recently Completed &middot; Port Orange, FL</div>
       </div>
     </div>
@@ -408,14 +459,46 @@
         <p>A recently completed new-construction home on the Intracoastal &mdash; from framing through final landscaping, built and managed by our crew.</p>
       </div>
       <div class="gallery">
-        <div class="gtile g1"><img src="photos/pool.jpg" alt="Backyard pool and spillover spa overlooking the Intracoastal Waterway"><span>Pool &amp; Spa &middot; Intracoastal Views</span></div>
-        <div class="gtile g2"><img src="photos/kitchen.jpg" alt="White kitchen remodel with quartz waterfall island and built-in wine fridge"><span>Kitchen &middot; Quartz &amp; Custom Cabinetry</span></div>
-        <div class="gtile g3"><img src="photos/exterior-rear.jpg" alt="Rear exterior of coastal home with spiral staircase to upper deck"><span>Exterior &middot; Coastal Elevation</span></div>
-        <div class="gtile g4"><img src="photos/exterior-modern.jpg" alt="Two-story custom home exterior with metal hip roofs and second-floor balcony"><span>New Construction &middot; Waterfront Home</span></div>
-        <div class="gtile g5"><img src="photos/lanai.jpg" alt="Covered lanai seating area overlooking the pool and waterway"><span>Outdoor Living &middot; Covered Lanai</span></div>
+        <button type="button" class="gtile g1" data-lightbox-open="0">
+          <img src="photos/pool.jpg" alt="Backyard pool and spillover spa overlooking the Intracoastal Waterway">
+          <span>Pool &amp; Spa &middot; Intracoastal Views</span>
+        </button>
+        <button type="button" class="gtile g2" data-lightbox-open="1">
+          <img src="photos/kitchen.jpg" alt="White kitchen remodel with quartz waterfall island and built-in wine fridge">
+          <span>Kitchen &middot; Quartz &amp; Custom Cabinetry</span>
+        </button>
+        <button type="button" class="gtile g3" data-lightbox-open="2">
+          <img src="photos/exterior-rear.jpg" alt="Rear exterior of coastal home with spiral staircase to upper deck">
+          <span>Exterior &middot; Coastal Elevation</span>
+        </button>
+        <button type="button" class="gtile g4" data-lightbox-open="3">
+          <img src="photos/exterior-modern.jpg" alt="Two-story custom home exterior with metal hip roofs and second-floor balcony">
+          <span>New Construction &middot; Waterfront Home</span>
+        </button>
+        <button type="button" class="gtile g5 gtile-more" data-lightbox-open="4">
+          <img src="photos/lanai.jpg" alt="Covered lanai seating area overlooking the pool and waterway">
+          <span class="gtile-more-label">+7 More<br>View All Photos</span>
+        </button>
       </div>
     </div>
   </section>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Project photo gallery">
+    <button type="button" class="lb-close" id="lb-close" aria-label="Close gallery">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <button type="button" class="lb-nav lb-prev" id="lb-prev" aria-label="Previous photo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <button type="button" class="lb-nav lb-next" id="lb-next" aria-label="Next photo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+    <figure class="lb-figure">
+      <img id="lb-img" src="" alt="">
+      <figcaption id="lb-caption"></figcaption>
+    </figure>
+    <div class="lb-counter mono" id="lb-counter"></div>
+  </div>
 
   <section id="services">
     <div class="wrap">
@@ -636,6 +719,76 @@
       e.preventDefault();
       success.classList.add('show');
       form.reset();
+    });
+  })();
+
+  (function(){
+    var photos = [
+      { src:'photos/pool.jpg', alt:'Backyard pool and spillover spa overlooking the Intracoastal Waterway', caption:'Pool & Spa · Intracoastal Views' },
+      { src:'photos/kitchen.jpg', alt:'White kitchen remodel with quartz waterfall island and built-in wine fridge', caption:'Kitchen · Quartz & Custom Cabinetry' },
+      { src:'photos/exterior-rear.jpg', alt:'Rear exterior of coastal home with spiral staircase to upper deck', caption:'Exterior · Coastal Elevation' },
+      { src:'photos/exterior-modern.jpg', alt:'Two-story custom home exterior with metal hip roofs and second-floor balcony', caption:'New Construction · Waterfront Home' },
+      { src:'photos/lanai.jpg', alt:'Covered lanai seating area overlooking the pool and waterway', caption:'Outdoor Living · Covered Lanai' },
+      { src:'photos/hero.jpg', alt:'Recently completed custom home with Niagara Builders job-site sign out front', caption:'Recently Completed · Port Orange, FL' },
+      { src:'photos/kitchen-2.jpg', alt:'Kitchen with waterfall island, prep table, and stainless built-in refrigerator', caption:'Kitchen · Island & Prep Table' },
+      { src:'photos/kitchen-3.jpg', alt:'Full kitchen view with cabinetry, range, and marble-look backsplash', caption:'Kitchen · Full Run of Cabinetry' },
+      { src:'photos/pool-2.jpg', alt:'Backyard pool and spa with two-story coastal home behind it', caption:'Pool & Spa · Coastal Backyard' },
+      { src:'photos/owner-site.jpg', alt:'Niagara Builders job-site sign with the owner on site near the water', caption:'On Site · Niagara Builders' },
+      { src:'photos/render-1.jpg', alt:'Architectural rendering of a large custom coastal home, rear exterior', caption:'Design Rendering · Custom Coastal Home' },
+      { src:'photos/render-2.jpg', alt:'Architectural rendering of a large custom coastal home, side exterior', caption:'Design Rendering · Custom Coastal Home' }
+    ];
+
+    var lightbox = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lb-img');
+    var lbCaption = document.getElementById('lb-caption');
+    var lbCounter = document.getElementById('lb-counter');
+    var lbClose = document.getElementById('lb-close');
+    var lbPrev = document.getElementById('lb-prev');
+    var lbNext = document.getElementById('lb-next');
+    var current = 0;
+    var lastFocused = null;
+
+    function render(){
+      var p = photos[current];
+      lbImg.src = p.src;
+      lbImg.alt = p.alt;
+      lbCaption.textContent = p.caption;
+      lbCounter.textContent = (current + 1) + ' / ' + photos.length;
+    }
+    function open(index){
+      current = index;
+      lastFocused = document.activeElement;
+      render();
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      lbClose.focus();
+    }
+    function close(){
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+    function next(){ current = (current + 1) % photos.length; render(); }
+    function prev(){ current = (current - 1 + photos.length) % photos.length; render(); }
+
+    document.querySelectorAll('[data-lightbox-open]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        open(parseInt(btn.getAttribute('data-lightbox-open'), 10));
+      });
+    });
+    lbClose.addEventListener('click', close);
+    lbNext.addEventListener('click', next);
+    lbPrev.addEventListener('click', prev);
+    lightbox.addEventListener('click', function(e){
+      if (e.target === lightbox) close();
+    });
+    document.addEventListener('keydown', function(e){
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') prev();
     });
   })();
 </script>
