@@ -1,806 +1,531 @@
 <title>Niagara Builders</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
   :root{
-    --ink:#1a1d21;
-    --ink-soft:#484e55;
-    --paper:#f6f4ef;
-    --paper-raised:#ffffff;
-    --line:#dcd8cf;
-    --blue:#1f7fd1;
-    --blue-deep:#155a9c;
-    --blue-light:#8fcaf0;
-    --accent-wash:#eaf3fb;
-    --focus:#155a9c;
+    --ink:#142a37;
+    --blue:#295e7d;
+    --muted:#596a73;
+    --line:#dce3e6;
+    --paper:#fff;
+    --pale:#f2f5f6;
+    --focus:#85bfe1;
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --ink:#eef1f4;
-      --ink-soft:#b7bec6;
-      --paper:#12181e;
-      --paper-raised:#182430;
-      --line:#2a3542;
-      --blue:#5fa8e6;
-      --blue-deep:#8fcaf0;
-      --blue-light:#3a6c93;
-      --accent-wash:#182b3a;
-      --focus:#8fcaf0;
-    }
-  }
-  :root[data-theme="dark"]{
-    --ink:#eef1f4;
-    --ink-soft:#b7bec6;
-    --paper:#12181e;
-    --paper-raised:#182430;
-    --line:#2a3542;
-    --blue:#5fa8e6;
-    --blue-deep:#8fcaf0;
-    --blue-light:#3a6c93;
-    --accent-wash:#182b3a;
-    --focus:#8fcaf0;
-  }
-
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth; scroll-padding-top:100px}
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} * {transition:none !important} }
   body{
-    margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:'Inter',system-ui,sans-serif;
-    -webkit-font-smoothing:antialiased;
+    margin:0; color:var(--ink); background:var(--paper);
+    font-family:'DM Sans',Arial,sans-serif; font-size:16px; line-height:1.65;
     padding-inline:0;
   }
-  main#top, section[id]{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 76px);}
-  img{max-width:100%;}
-  h1,h2,h3{font-family:'Archivo',system-ui,sans-serif;text-wrap:balance;margin:0;}
-  a{color:inherit;}
-  .wrap{
-    max-width:1120px;
-    margin-inline:auto;
-    padding-inline:20px;
-  }
-  @media (min-width:640px){ .wrap{padding-inline:32px;} }
+  main#top, section[id]{scroll-margin-top:100px}
+  @media (max-width:700px){ main#top, section[id]{scroll-margin-top:25px} }
+  img{max-width:100%}
+  a{color:inherit}
+  button,input,select,textarea{font:inherit}
+  button,a,input,textarea,select{-webkit-tap-highlight-color:transparent}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--focus); outline-offset:5px}
+  button{cursor:pointer}
+  h1,h2,h3,p{margin:0}
+  h1,h2,h3{font-family:'Manrope',Arial,sans-serif}
 
-  .mono{
-    font-family:'Space Mono',monospace;
-    letter-spacing:.06em;
-    text-transform:uppercase;
-    font-size:.72rem;
-  }
-
-  /* ---------- Header ---------- */
   header{
-    position:sticky; top:env(safe-area-inset-top,0px);
-    z-index:20;
-    background:color-mix(in srgb, var(--paper) 88%, transparent);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
+    height:100px; padding:0 5%; display:flex; align-items:center; justify-content:space-between; gap:28px;
+    background:var(--paper); position:sticky; top:env(safe-area-inset-top,0px); z-index:20;
   }
-  .nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding-block:14px;
-    gap:16px;
-  }
-  .brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
-  .brand-mark{width:46px; height:31px; display:block; flex:none;}
-  .brand-word{font-family:'Archivo',sans-serif; font-weight:900; font-size:1.05rem; letter-spacing:-.01em; line-height:1; color:var(--ink);}
-  .brand-word span{display:block; font-family:'Space Mono',monospace; font-weight:400; text-transform:uppercase; letter-spacing:.14em; font-size:.58rem; color:var(--ink-soft); margin-top:3px;}
-  nav.links{display:flex; gap:28px; font-size:.92rem; font-weight:500;}
-  nav.links a{text-decoration:none; color:var(--ink-soft); transition:color .15s;}
-  nav.links a:hover{color:var(--blue-deep);}
-  @media (max-width:760px){ nav.links{display:none;} }
-  .btn{
-    display:inline-flex; align-items:center; gap:8px;
-    background:var(--ink); color:var(--paper);
-    font-weight:600; font-size:.88rem;
-    padding:11px 20px; border-radius:2px;
-    text-decoration:none; border:1px solid var(--ink);
-    white-space:nowrap;
-  }
-  .btn:hover{background:var(--blue-deep); border-color:var(--blue-deep);}
-  .btn:focus-visible, a:focus-visible, button:focus-visible{outline:2px solid var(--focus); outline-offset:2px;}
-  .btn-ghost{
-    background:transparent; color:var(--ink); border:1px solid var(--line);
-  }
-  .btn-ghost:hover{border-color:var(--blue); color:var(--blue-deep); background:var(--accent-wash);}
+  .brand{display:flex; align-items:center; gap:12px; text-decoration:none}
+  .brand img{width:49px; height:43px; display:block}
+  .brand span{font-size:23px; font-weight:800; letter-spacing:.075em; line-height:1.15}
+  .brand small{display:block; font-size:12px; letter-spacing:.36em; margin-top:5px}
+  nav{display:flex; gap:30px}
+  nav a{text-decoration:none; font-size:14px; font-weight:600}
+  nav a:hover{color:var(--blue)}
 
-  /* ---------- Hero ---------- */
+  .button{
+    display:inline-flex; justify-content:center; align-items:center;
+    background:var(--ink); color:#fff; padding:15px 25px; text-decoration:none;
+    font-size:14px; font-weight:600; border:1px solid var(--ink); border-radius:0; transition:background .2s;
+  }
+  .button:hover{background:var(--blue); color:#fff}
+  .button.small{padding:12px 20px}
+  .button.white{background:#fff; color:var(--ink); border-color:#fff}
+  .button.white:hover{background:#d9e9f1}
+  #menu{display:none}
+
   .hero{
-    padding-block:64px 56px;
-    position:relative;
-    overflow:hidden;
-    border-bottom:1px solid var(--line);
+    position:relative; min-height:690px; height:calc(100vh - 100px); max-height:920px;
+    background:#283b45; color:#fff; display:flex; align-items:center; overflow:hidden;
   }
-  .hero-grid{
-    display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:center;
+  .hero>img{position:absolute; width:100%; height:100%; object-fit:cover; object-position:50% 56%}
+  .shade{
+    position:absolute; inset:0;
+    background:linear-gradient(90deg,rgba(9,25,34,.84),rgba(9,25,34,.48) 52%,rgba(9,25,34,.04)),
+               linear-gradient(0deg,rgba(9,25,34,.5),transparent 30%);
   }
-  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr; gap:40px;} }
-  .eyebrow{
-    display:flex; align-items:center; gap:10px;
-    color:var(--blue-deep); font-weight:700; margin-bottom:18px;
-  }
-  .eyebrow .dot{width:7px;height:7px;background:var(--blue);border-radius:50%;}
-  h1.headline{
-    font-size:clamp(2.4rem, 5.2vw, 3.6rem);
-    font-weight:900; line-height:1.03; letter-spacing:-.02em;
-    color:var(--ink);
-  }
-  h1.headline em{
-    font-style:normal; color:var(--blue-deep);
-    background:linear-gradient(180deg, transparent 62%, var(--accent-wash) 62%);
-  }
-  .hero-sub{
-    margin-top:20px; font-size:1.08rem; line-height:1.6; color:var(--ink-soft);
-    max-width:46ch;
-  }
-  .hero-cta{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
-  .hero-meta{
-    display:flex; gap:28px; margin-top:40px; flex-wrap:wrap;
-  }
-  .hero-meta div{border-left:2px solid var(--blue); padding-left:12px;}
-  .hero-meta b{display:block; font-family:'Archivo',sans-serif; font-size:1.5rem; font-weight:900;}
-  .hero-meta span{color:var(--ink-soft); font-size:.82rem;}
-
-  .hero-art{
-    position:relative; aspect-ratio:4/5; max-width:440px; margin-inline:auto; width:100%;
-    border-radius:3px; overflow:hidden; box-shadow:0 24px 48px -20px rgba(15,20,25,.35);
-  }
-  .hero-art img{width:100%; height:100%; object-fit:cover; display:block;}
-  .hero-art-tag{
-    position:absolute; left:16px; bottom:16px;
-    background:rgba(18,24,30,.72); color:#fff; backdrop-filter:blur(6px);
-    padding:8px 12px; border-radius:2px; font-size:.68rem;
+  .hero-copy{position:relative; max-width:850px; padding:40px 7% 90px}
+  .eyebrow{font-size:12px; letter-spacing:.16em; font-weight:700; line-height:1.8; margin-bottom:22px; color:var(--blue)}
+  .hero .eyebrow{color:#dfedf3; font-size:12px}
+  .hero h1{font-weight:500; font-size:clamp(50px,6.2vw,91px); line-height:1.08; letter-spacing:-.045em}
+  .hero h1 em{font-style:normal; color:#b8dbed}
+  .hero-copy>p:not(.eyebrow){max-width:460px; margin-top:26px; color:#e5edf0; font-size:18px; line-height:1.7}
+  .actions{display:flex; gap:28px; align-items:center; margin-top:36px; flex-wrap:wrap}
+  .text-link{text-underline-offset:7px; font-size:14px}
+  .hero-bottom{
+    position:absolute; bottom:28px; left:7%; right:7%;
+    display:flex; justify-content:space-between; font-size:12px; letter-spacing:.08em;
   }
 
-  /* ---------- Marquee strip ---------- */
-  .strip{
-    background:var(--ink); color:var(--paper);
-    padding-block:12px; overflow:hidden; border-bottom:1px solid var(--line);
+  .trust{
+    padding:27px 7%; display:flex; justify-content:space-between; gap:22px;
+    border-bottom:1px solid var(--line); font-size:14px;
   }
-  .strip-inner{
-    display:flex; gap:14px; white-space:nowrap; animation:scroll 28s linear infinite;
-    font-family:'Space Mono',monospace; font-size:.78rem; letter-spacing:.08em; text-transform:uppercase;
-  }
-  .strip-inner span::after{content:"\00b7"; margin-left:14px; color:var(--blue-light); opacity:.6;}
-  .strip:hover .strip-inner{animation-play-state:paused;}
-  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
-  @media (prefers-reduced-motion:reduce){ .strip-inner{animation:none; flex-wrap:wrap;} }
+  .trust span+span{border-left:1px solid var(--line); padding-left:35px}
 
-  /* ---------- Section shell ---------- */
-  section{padding-block:76px;}
-  .section-head{
-    display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
-    margin-bottom:44px; flex-wrap:wrap;
-  }
-  .section-head h2{font-size:clamp(1.7rem,3.2vw,2.3rem); letter-spacing:-.01em;}
-  .section-head p{color:var(--ink-soft); max-width:40ch; margin-top:10px;}
-  .kicker{color:var(--blue-deep); font-weight:700; margin-bottom:10px; display:block;}
+  .section{padding:100px 7%}
+  .section-top{display:flex; justify-content:space-between; gap:60px; align-items:flex-end; margin-bottom:45px}
+  h2{font-size:clamp(34px,3.6vw,52px); line-height:1.18; letter-spacing:-.045em; font-weight:500}
+  .section-top>p{max-width:390px; color:var(--muted)}
 
-  /* ---------- Services ---------- */
-  .services{
-    display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
-    background:var(--line); border:1px solid var(--line);
+  .work-grid{display:grid; grid-template-columns:1.18fr 1fr; gap:22px}
+  .photo{
+    padding:0; border:0; margin:0; position:relative; min-height:300px; background:var(--ink);
+    overflow:hidden; text-align:left; color:#fff; width:100%; display:block; font:inherit;
   }
-  @media (max-width:640px){ .services{grid-template-columns:1fr;} }
-  .service{
-    background:var(--paper-raised); padding:36px 32px; display:flex; flex-direction:column; gap:14px;
-  }
-  .service .num{font-family:'Space Mono',monospace; color:var(--blue); font-size:.8rem;}
-  .service h3{font-size:1.3rem; font-weight:700; font-family:'Archivo',sans-serif;}
-  .service p{color:var(--ink-soft); font-size:.96rem; line-height:1.6; margin:0; max-width:38ch;}
+  .photo.large{grid-row:span 2}
+  .photo>img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s}
+  .photo:hover>img{transform:scale(1.035)}
+  .photo:after{content:''; position:absolute; inset:0; background:linear-gradient(0deg,rgba(7,22,29,.82),transparent 68%)}
+  .photo>span{position:absolute; z-index:1; bottom:27px; left:28px; right:28px; font-size:12px; letter-spacing:.12em}
+  .photo b{display:block; font-weight:500; letter-spacing:-.02em; font-size:25px; line-height:1.3; margin-top:9px}
+  .photo small{display:block; margin-top:12px; font-size:12px; letter-spacing:0; text-decoration:underline; text-underline-offset:4px}
 
-  /* ---------- Process ---------- */
-  .process{background:var(--accent-wash); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:36px 32px; position:relative;}
-  @media (max-width:760px){ .steps{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:520px){ .steps{grid-template-columns:1fr;} }
-  .step{position:relative; padding-top:8px;}
-  .step .idx{
-    font-family:'Archivo',sans-serif; font-weight:900; font-size:2.6rem; color:var(--blue-light);
-    -webkit-text-stroke:1.5px var(--blue-deep); color:transparent;
-    line-height:1; margin-bottom:14px; display:block;
-  }
-  .step h3{font-size:1rem; margin-bottom:8px;}
-  .step p{color:var(--ink-soft); font-size:.9rem; line-height:1.55; margin:0;}
-  .process-note{
-    margin-top:48px; padding-top:28px; border-top:1px solid var(--line);
-    color:var(--ink-soft); font-size:.94rem; line-height:1.6; max-width:60ch;
-  }
+  .gallery-bottom{display:flex; align-items:center; justify-content:space-between; margin-top:26px; color:var(--muted); font-size:14px; gap:20px}
+  .outline{border:1px solid var(--line); background:var(--paper); color:var(--ink); padding:12px 20px; font-size:14px}
+  .outline:hover{border-color:var(--ink)}
+  .more-gallery{margin-top:24px; display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+  .more-gallery[hidden]{display:none}
+  .more-gallery .photo{min-height:250px}
+  .more-gallery .photo b{font-size:18px}
 
-  /* ---------- Why / stats ---------- */
-  .why-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:stretch;}
-  @media (max-width:860px){ .why-grid{grid-template-columns:1fr;} }
-  .why-list{display:flex; flex-direction:column; gap:22px;}
-  .why-item{display:flex; gap:16px;}
-  .why-item .mark{
-    flex:none; width:28px; height:28px; border-radius:50%;
-    background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center;
-    margin-top:2px;
-  }
-  .why-item .mark svg{width:14px; height:14px;}
-  .why-heading{font-size:clamp(1.7rem,3.2vw,2.3rem); margin-bottom:28px;}
-  .why-item h3{font-size:1rem; margin-bottom:4px;}
-  .why-item p{margin:0; color:var(--ink-soft); font-size:.92rem; line-height:1.55;}
+  .expertise{background:var(--pale)}
+  .service-grid{display:grid; grid-template-columns:1fr 1fr; border-top:1px solid #bdcbd2}
+  .service-grid article{padding:40px 50px 0 0}
+  .service-grid article+article{padding-left:50px; border-left:1px solid #bdcbd2}
+  .index{color:var(--blue); font-size:14px}
+  .service-grid h3{font-size:32px; font-weight:500; letter-spacing:-.035em; line-height:1.3; margin:22px 0}
+  .service-grid p{color:var(--muted); max-width:440px}
+  .service-grid a{display:inline-block; font-size:14px; font-weight:600; margin-top:27px; text-underline-offset:6px; text-decoration:underline}
 
-  .stat-card{
-    background:var(--ink); color:var(--paper); border-radius:3px; padding:36px 32px;
-    display:flex; flex-direction:column; justify-content:center;
-  }
-  .stat{
-    display:flex; align-items:center; gap:20px;
-    padding-block:22px; border-top:1px solid #333a42;
-  }
-  .stat:first-child{border-top:none; padding-top:0;}
-  .stat b{
-    flex:none; width:108px;
-    font-family:'Archivo',sans-serif; font-weight:900; font-size:2rem;
-    color:var(--blue-light); line-height:1;
-  }
-  .stat span{font-size:.86rem; color:#c7cdd3; line-height:1.5;}
-  .stat-card .license{
-    border-top:1px solid #333a42; padding-top:20px; margin-top:22px;
-    font-family:'Space Mono',monospace; font-size:.74rem; color:#9aa3ab; letter-spacing:.04em;
-  }
-  @media (max-width:420px){
-    .stat{flex-direction:column; align-items:flex-start; gap:6px;}
-    .stat b{width:auto;}
-  }
+  .about{display:grid; grid-template-columns:1fr 1fr; gap:75px; align-items:center}
+  .about-image{position:relative; height:660px}
+  .about-image img{width:100%; height:100%; object-fit:cover; display:block}
+  .about-image span{position:absolute; bottom:22px; left:25px; background:#fff; padding:10px 17px; font-size:13px}
+  .about h2{font-size:43px}
+  .about h2+p{margin-top:24px; color:var(--muted)}
+  .reasons{margin-top:30px}
+  .reasons article{padding:18px 0; border-top:1px solid var(--line)}
+  .reasons h3{font-size:17px; font-weight:600}
+  .reasons p{font-size:15px; color:var(--muted); margin-top:6px}
 
-  /* ---------- Gallery ---------- */
-  .gallery{display:grid; grid-template-columns:1.4fr 1fr 1fr; grid-template-rows:repeat(2,160px); gap:10px;}
-  @media (max-width:760px){ .gallery{grid-template-columns:1fr 1fr; grid-template-rows:repeat(3,140px);} }
-  @media (max-width:480px){ .gallery{grid-template-columns:1fr; grid-template-rows:repeat(5,160px);} }
-  .gtile{
-    border-radius:2px; position:relative; overflow:hidden;
-    display:flex; align-items:flex-end; padding:16px;
-    color:#fff; font-family:'Space Mono',monospace; font-size:.72rem; letter-spacing:.05em; text-transform:uppercase;
-    border:none; margin:0; width:100%; height:100%; cursor:pointer; text-align:left; font:inherit;
-  }
-  .gtile:focus-visible{outline:2px solid var(--focus); outline-offset:2px;}
-  .gtile img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-    transition:transform .5s ease;
-  }
-  .gtile:hover img{transform:scale(1.05);}
-  .gtile::after{content:"";position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,.62), transparent 55%);}
-  .gtile span{position:relative; z-index:1;}
-  .gtile.g1{grid-row:1/3;}
-  .gtile-more::before{
-    content:""; position:absolute; inset:0; background:rgba(10,15,20,.58); z-index:1;
-  }
-  .gtile-more:hover::before{background:rgba(10,15,20,.68);}
-  .gtile-more-label{
-    font-size:.98rem; font-weight:700; letter-spacing:.02em; line-height:1.4;
-    text-transform:none; font-family:'Archivo',sans-serif;
-  }
+  .process{background:var(--pale)}
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:28px; border-top:1px solid #bdcbd2; padding-top:30px}
+  .steps span{font-size:12px; letter-spacing:.1em; color:var(--blue)}
+  .steps h3{font-size:21px; letter-spacing:-.025em; font-weight:600; margin:20px 0 12px}
+  .steps p{color:var(--muted); font-size:15px}
 
-  /* ---------- Lightbox ---------- */
-  .lightbox{
-    position:fixed; inset:0; z-index:100;
-    background:rgba(8,10,13,.94);
-    display:flex; align-items:center; justify-content:center;
-    opacity:0; visibility:hidden; transition:opacity .2s ease;
-    padding:env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px);
+  .contact{background:var(--ink); color:#fff; display:grid; grid-template-columns:1fr .9fr; gap:90px}
+  .contact .eyebrow{color:#b4d5e7}
+  .contact h2{font-size:47px; color:#fff}
+  .contact h2+p{color:#bdccd3; margin-top:24px; max-width:430px}
+  .email{display:inline-block; margin-top:30px; font-size:21px; text-underline-offset:7px; color:#fff; text-decoration:underline}
+  .contact-meta{color:#bdccd3; margin-top:24px; font-size:14px}
+  .contact form{padding:32px; background:#203b4b}
+  .contact form h3{font-size:24px; font-weight:500; margin-bottom:25px; color:#fff}
+  .fields{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  label{display:block; font-size:14px; margin-bottom:18px; color:#fff}
+  input,select,textarea{
+    width:100%; display:block; background:transparent; border:1px solid #6a808d; color:#fff;
+    padding:12px; margin-top:7px; border-radius:0;
   }
-  .lightbox.open{opacity:1; visibility:visible;}
-  .lb-figure{
-    margin:0; max-width:min(1100px,92vw); max-height:86vh;
-    display:flex; flex-direction:column; align-items:center; gap:14px;
-  }
-  .lb-figure img{
-    max-width:100%; max-height:74vh; object-fit:contain;
-    border-radius:3px; display:block;
-  }
-  .lb-figure figcaption{
-    color:#fff; font-size:.92rem; text-align:center; max-width:60ch;
-    font-family:'Inter',sans-serif;
-  }
-  .lb-close, .lb-nav{
-    position:fixed; background:rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.18);
-    border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center;
-    cursor:pointer; transition:background .15s;
-  }
-  .lb-close svg, .lb-nav svg{width:20px; height:20px;}
-  .lb-close:hover, .lb-nav:hover{background:rgba(255,255,255,.18);}
-  .lb-close{top:calc(env(safe-area-inset-top,0px) + 20px); right:20px;}
-  .lb-prev{left:20px; top:50%; transform:translateY(-50%);}
-  .lb-next{right:20px; top:50%; transform:translateY(-50%);}
-  .lb-counter{
-    position:fixed; bottom:calc(env(safe-area-inset-bottom,0px) + 20px); left:50%; transform:translateX(-50%);
-    color:#fff; opacity:.7;
-  }
-  @media (max-width:640px){
-    .lb-prev{left:8px;} .lb-next{right:8px;}
-    .lb-close{right:8px;}
-    .lb-close, .lb-nav{width:38px; height:38px;}
-  }
+  select option{color:var(--ink); background:#fff}
+  textarea{resize:vertical}
+  textarea::placeholder{color:#b7c6ce}
+  .form-note{font-size:12px; color:#b7c6ce; margin-top:16px}
+  .contact form .button{width:100%}
+  #form-status{font-size:14px; margin-top:12px; color:#fff}
 
-  /* ---------- Testimonials ---------- */
-  .quotes{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-  @media (max-width:860px){ .quotes{grid-template-columns:1fr;} }
-  .quote{
-    background:var(--paper-raised); border:1px solid var(--line); border-radius:3px;
-    padding:28px; display:flex; flex-direction:column; gap:18px;
-  }
-  .quote .badge{
-    display:inline-flex; align-items:center; gap:6px;
-    color:var(--blue-deep); font-weight:700; font-size:.82rem;
-  }
-  .quote .badge svg{width:16px; height:16px; flex:none;}
-  .quote .stars{display:flex; gap:3px; color:var(--blue);}
-  .quote .stars svg{width:15px; height:15px;}
-  .quote p{margin:0; font-size:.96rem; line-height:1.6; color:var(--ink);}
-  .quote footer{font-size:.82rem; color:var(--ink-soft); font-weight:600;}
+  footer{padding:40px 7%; display:flex; justify-content:space-between; gap:30px; align-items:center; flex-wrap:wrap}
+  footer p, footer>span{font-size:12px; color:var(--muted)}
+  footer .f-foot{display:flex; flex-direction:column; align-items:flex-end; gap:6px}
+  @media (max-width:700px){ footer .f-foot{align-items:flex-start} }
+  .credit-link{font-size:12px; color:var(--muted); text-decoration:none}
+  .credit-link:hover{color:var(--blue); text-decoration:underline}
 
-  /* ---------- CTA / Contact ---------- */
-  .contact{
-    background:var(--ink); color:var(--paper);
-  }
-  .contact-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:56px;}
-  @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} }
-  .contact h2{color:var(--paper); font-size:clamp(1.8rem,3.4vw,2.4rem);}
-  .kicker-inverse{color:var(--blue-light);}
-  .contact p.lead{color:#c7cdd3; margin-top:14px; max-width:42ch; line-height:1.6;}
-  .contact-list{list-style:none; margin:32px 0 0; padding:0; display:flex; flex-direction:column; gap:18px;}
-  .contact-list li{display:flex; gap:14px; align-items:flex-start;}
-  .contact-list .ic{flex:none; width:20px; height:20px; color:var(--blue-light); margin-top:2px;}
-  .contact-list .ic svg{width:100%; height:100%; display:block;}
-  .contact-list a{text-decoration:none; color:var(--paper);}
-  .contact-list a:hover{color:var(--blue-light);}
-  .contact-list .lbl{display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:#8b939b; margin-bottom:2px;}
+  dialog{width:min(1100px,94vw); max-height:94vh; border:0; background:var(--ink); color:#fff; padding:20px; border-radius:0}
+  dialog::backdrop{background:rgba(3,13,19,.9)}
+  dialog>img{display:block; width:100%; height:70vh; object-fit:contain}
+  dialog button{border:1px solid #6a808d; background:transparent; color:#fff; padding:7px 15px; font-size:14px}
+  #close{display:block; margin-left:auto; margin-bottom:15px}
+  .dialog-bottom{display:flex; justify-content:space-between; align-items:center; gap:16px; margin-top:20px}
+  .dialog-bottom p{font-size:14px; text-align:center}
 
-  .form-card{
-    background:var(--paper-raised); color:var(--ink); border-radius:3px; padding:30px;
+  @media(min-width:1600px){ .section{padding-inline:max(7%,calc((100% - 1400px)/2))} }
+  @media(max-width:1050px){
+    header nav{gap:18px}
+    header .small{display:none}
+    .about{gap:40px}
+    .about h2{font-size:36px}
+    .contact{gap:40px}
+    .contact h2{font-size:38px}
+    .steps{grid-template-columns:1fr 1fr}
   }
-  .form-card h3{font-size:1.1rem; margin-bottom:4px;}
-  .form-card p{color:var(--ink-soft); font-size:.88rem; margin:0 0 20px;}
-  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:16px;}
-  .field label{font-size:.78rem; font-weight:600; color:var(--ink-soft);}
-  .field input, .field select, .field textarea{
-    font:inherit; font-size:.94rem; padding:11px 12px; border:1px solid var(--line);
-    border-radius:2px; background:var(--paper); color:var(--ink); width:100%;
+  @media(max-width:700px){
+    header{height:80px; padding:0 6%}
+    .brand span{font-size:19px}
+    .brand img{width:38px}
+    .brand small{font-size:10px}
+    #menu{display:block; background:transparent; border:1px solid var(--line); padding:8px 14px; font-size:14px}
+    header nav{display:none; position:absolute; top:80px; left:0; right:0; z-index:10; background:#fff; padding:25px 6%; flex-direction:column}
+    header nav.open{display:flex}
+    .hero{height:710px; min-height:0}
+    .hero>img{object-position:60% center}
+    .hero-copy{padding:40px 7% 70px}
+    .hero .eyebrow{font-size:11px; max-width:270px}
+    .hero h1{font-size:52px}
+    .hero-copy>p:not(.eyebrow){font-size:16px}
+    .actions{gap:20px; flex-wrap:wrap}
+    .hero-bottom{flex-direction:column; gap:7px; font-size:10px}
+    .trust{flex-direction:column; gap:10px; padding:22px 7%; font-size:13px}
+    .trust span+span{border-left:0; padding-left:0}
+    .section{padding:65px 7%}
+    .section-top{display:block; margin-bottom:30px}
+    .section-top>p{margin-top:23px}
+    .eyebrow{font-size:11px; margin-bottom:16px}
+    h2{font-size:36px}
+    .work-grid{grid-template-columns:1fr; gap:16px}
+    .photo.large{grid-row:auto; min-height:450px}
+    .photo{min-height:300px}
+    .photo b{font-size:23px}
+    .gallery-bottom{gap:20px; align-items:flex-start; flex-direction:column}
+    .more-gallery{grid-template-columns:1fr}
+    .service-grid{grid-template-columns:1fr}
+    .service-grid article{padding:30px 0}
+    .service-grid article+article{padding-left:0; border-left:0; border-top:1px solid #bdcbd2}
+    .service-grid h3{font-size:29px}
+    .about{grid-template-columns:1fr; gap:35px}
+    .about-image{height:410px}
+    .about h2{font-size:35px}
+    .steps{grid-template-columns:1fr; gap:28px}
+    .steps h3{margin-top:10px}
+    .contact{grid-template-columns:1fr; gap:40px}
+    .contact h2{font-size:37px}
+    .contact form{padding:25px 20px}
+    .fields{grid-template-columns:1fr; gap:0}
+    footer{flex-direction:column; align-items:flex-start; padding:35px 7%}
+    footer .f-foot{align-items:flex-start}
+    .dialog-bottom{flex-wrap:wrap}
+    .dialog-bottom p{order:3; width:100%}
+    dialog>img{height:60vh}
   }
-  .field textarea{resize:vertical; min-height:80px;}
-  .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid var(--focus); outline-offset:1px; border-color:var(--focus);}
-  .submit-btn{
-    width:100%; background:var(--ink); color:var(--paper); border:none; border-radius:2px;
-    padding:13px; font:inherit; font-weight:700; font-size:.94rem; cursor:pointer; margin-top:4px;
-  }
-  .submit-btn:hover{background:var(--blue-deep);}
-  .form-note{font-size:.78rem; color:var(--ink-soft); margin-top:12px;}
-  .success-msg{
-    display:none; background:var(--accent-wash); border:1px solid var(--blue-light); border-radius:2px;
-    padding:14px 16px; font-size:.88rem; color:var(--blue-deep); margin-top:4px;
-  }
-  .success-msg.show{display:block;}
-
-  footer.site{
-    border-top:1px solid var(--line); padding-block:28px;
-  }
-  footer.site .wrap{
-    display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;
-  }
-  footer.site .f-brand{display:flex; align-items:center; gap:10px;}
-  footer.site .f-brand svg{width:33px; height:22px;}
-  footer.site p{margin:0; font-size:.8rem; color:var(--ink-soft);}
-  .credit-row{
-    margin-top:20px; padding-top:20px; border-top:1px solid var(--line);
-    display:flex; justify-content:center;
-  }
-  .credit-link{
-    font-size:.76rem; color:var(--ink-soft); text-decoration:none;
-    letter-spacing:.02em; transition:color .15s;
-  }
-  .credit-link:hover{color:var(--blue-deep); text-decoration:underline;}
 </style>
 
 <header>
-  <div class="wrap nav">
-    <a class="brand" href="#top">
-      <svg class="brand-mark" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Niagara Builders logo">
-        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#8DBCD7" transform="translate(42,0)"/>
-        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#76ADD0" transform="translate(30,0)"/>
-        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#5B9CC8" transform="translate(18,0)"/>
-        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#0071C8"/>
-        <rect x="26" y="19" width="219" height="366" rx="1.5" fill="var(--ink)"/>
-      </svg>
-      <span class="brand-word">Niagara Builders<span>High-End Custom Homes</span></span>
-    </a>
-    <nav class="links" aria-label="Primary">
-      <a href="#work">Our Work</a>
-      <a href="#services">Services</a>
-      <a href="#process">Process</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <a class="btn" href="#contact">Get in Contact</a>
-  </div>
+  <a class="brand" href="#top">
+    <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Niagara Builders logo">
+      <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#8DBCD7" transform="translate(42,0)"/>
+      <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#76ADD0" transform="translate(30,0)"/>
+      <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#5B9CC8" transform="translate(18,0)"/>
+      <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#0071C8"/>
+      <rect x="26" y="19" width="219" height="366" rx="1.5" fill="#142a37"/>
+    </svg>
+    <span>NIAGARA<small>BUILDERS</small></span>
+  </a>
+  <nav aria-label="Main navigation">
+    <a href="#work">Our work</a>
+    <a href="#expertise">Expertise</a>
+    <a href="#approach">Our approach</a>
+    <a href="#about">About Niagara</a>
+  </nav>
+  <a class="button small" href="#contact">Let&rsquo;s talk about your home</a>
+  <button id="menu" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
 </header>
 
 <main id="top">
 
   <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <div class="eyebrow mono"><span class="dot"></span>Port Orange, FL &middot; Licensed CRC058289</div>
-        <h1 class="headline">Custom homes, built to <em>hold up</em> like they were poured yesterday &mdash; and finished twenty years ago.</h1>
-        <p class="hero-sub">Niagara Builders is a family-run general contractor in Volusia County, taking on a select number of high-end custom homes and full remodels each year &mdash; run by the same crew from first sketch to final walkthrough.</p>
-        <div class="hero-cta">
-          <a class="btn" href="#contact">Get in Contact</a>
-          <a class="btn btn-ghost" href="#work">See Our Work</a>
-        </div>
-        <div class="hero-meta">
-          <div><b>25+</b><span>Years Building in Volusia County</span></div>
-          <div><b>10+</b><span>Permitted Projects on Record</span></div>
-          <div><b>99</b><span>BuildZoom Contractor Score</span></div>
-        </div>
+    <img src="photos/exterior-modern.jpg" alt="Niagara Builders waterfront custom home with metal roofs and a second-floor balcony">
+    <div class="shade"></div>
+    <div class="hero-copy">
+      <p class="eyebrow">CUSTOM HOMES &amp; FULL HOME REMODELS &middot; VOLUSIA COUNTY, FL</p>
+      <h1>A home that feels<br>entirely <em>yours.</em></h1>
+      <p>Thoughtfully built custom homes. Beautifully reimagined spaces. A personal commitment to every detail.</p>
+      <div class="actions">
+        <a class="button white" href="#work">Explore our work</a>
+        <a class="text-link" href="#contact">Start a conversation</a>
       </div>
-      <div class="hero-art">
-        <img src="photos/hero.jpg" alt="Recently completed custom home by Niagara Builders with job-site sign">
-        <div class="hero-art-tag mono">Recently Completed &middot; Port Orange, FL</div>
-      </div>
+    </div>
+    <div class="hero-bottom">
+      <span>NIAGARA BUILDERS &middot; EST. 1998</span>
+      <span>Featured work / Waterfront custom home</span>
     </div>
   </section>
 
-  <div class="strip" aria-hidden="true">
-    <div class="strip-inner">
-      <span>High-End Custom Homes</span>
-      <span>Full Home Remodels</span>
-      <span>Licensed &amp; Insured &mdash; CRC058289</span>
-      <span>Volusia County, FL</span>
-      <span>High-End Custom Homes</span>
-      <span>Full Home Remodels</span>
-      <span>Licensed &amp; Insured &mdash; CRC058289</span>
-      <span>Volusia County, FL</span>
-    </div>
+  <div class="trust">
+    <span>Rooted in Port Orange since 1998</span>
+    <span>Custom homes &amp; complete renovations</span>
+    <span>Personal oversight from start to finish</span>
   </div>
 
-  <section id="work">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <span class="kicker mono">Recent Work</span>
-          <h2>A waterfront custom build, start to finish.</h2>
-        </div>
-        <p>A recently completed new-construction home on the Intracoastal &mdash; from framing through final landscaping, built and managed by our crew.</p>
-      </div>
-      <div class="gallery">
-        <button type="button" class="gtile g1" data-lightbox-open="0">
-          <img src="photos/pool.jpg" alt="Backyard pool and spillover spa overlooking the Intracoastal Waterway">
-          <span>Pool &amp; Spa &middot; Intracoastal Views</span>
-        </button>
-        <button type="button" class="gtile g2" data-lightbox-open="1">
-          <img src="photos/kitchen.jpg" alt="White kitchen remodel with quartz waterfall island and built-in wine fridge">
-          <span>Kitchen &middot; Quartz &amp; Custom Cabinetry</span>
-        </button>
-        <button type="button" class="gtile g3" data-lightbox-open="2">
-          <img src="photos/exterior-rear.jpg" alt="Rear exterior of coastal home with spiral staircase to upper deck">
-          <span>Exterior &middot; Coastal Elevation</span>
-        </button>
-        <button type="button" class="gtile g4" data-lightbox-open="3">
-          <img src="photos/exterior-modern.jpg" alt="Two-story custom home exterior with metal hip roofs and second-floor balcony">
-          <span>New Construction &middot; Waterfront Home</span>
-        </button>
-        <button type="button" class="gtile g5 gtile-more" data-lightbox-open="4">
-          <img src="photos/lanai.jpg" alt="Covered lanai seating area overlooking the pool and waterway">
-          <span class="gtile-more-label">+7 More<br>View All Photos</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Project photo gallery">
-    <button type="button" class="lb-close" id="lb-close" aria-label="Close gallery">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-    <button type="button" class="lb-nav lb-prev" id="lb-prev" aria-label="Previous photo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-    </button>
-    <button type="button" class="lb-nav lb-next" id="lb-next" aria-label="Next photo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-    </button>
-    <figure class="lb-figure">
-      <img id="lb-img" src="" alt="">
-      <figcaption id="lb-caption"></figcaption>
-    </figure>
-    <div class="lb-counter mono" id="lb-counter"></div>
-  </div>
-
-  <section id="services">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <span class="kicker mono">What We Build</span>
-          <h2>Two disciplines. Full attention on each.</h2>
-        </div>
-        <p>We take on a limited number of projects each year &mdash; high-end custom homes and full remodels &mdash; so every job gets the same estimator, the same foreman, and the same crew from day one.</p>
-      </div>
-      <div class="services">
-        <div class="service">
-          <span class="num mono">01</span>
-          <h3>High-End Custom Homes</h3>
-          <p>Ground-up single-family homes built to a high standard of finish, designed and permitted through Volusia County before the first stake goes in the ground.</p>
-        </div>
-        <div class="service">
-          <span class="num mono">02</span>
-          <h3>Full Home Remodels</h3>
-          <p>Complete, whole-home renovations &mdash; layout changes, structural work, and finishes handled under one contract, top to bottom.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="process" id="process">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <span class="kicker mono">How A Project Runs</span>
-          <h2>From a first walkthrough to a signed contract.</h2>
-        </div>
-        <p>The same process we've used since 1998 &mdash; personal from the first meeting, and backed by an architect once the design gets serious.</p>
-      </div>
-      <div class="steps">
-        <div class="step">
-          <span class="idx">01</span>
-          <h3>Walk a Home Together</h3>
-          <p>We usually meet on-site &mdash; a home we have under construction, or one we've finished &mdash; to talk through what you're after and any plans you already have.</p>
-        </div>
-        <div class="step">
-          <span class="idx">02</span>
-          <h3>Talk to Past Clients</h3>
-          <p>If you'd like to hear about the experience firsthand, we'll put you in touch with homeowners we've built for.</p>
-        </div>
-        <div class="step">
-          <span class="idx">03</span>
-          <h3>Trade Design Ideas</h3>
-          <p>We go back and forth by email, sharing ideas and references, until the direction for the home starts to take shape.</p>
-        </div>
-        <div class="step">
-          <span class="idx">04</span>
-          <h3>Sit Down With Our Architect</h3>
-          <p>Our architect joins the process &mdash; a sit-down at their office or on-site to finalize the design and engineering.</p>
-        </div>
-        <div class="step">
-          <span class="idx">05</span>
-          <h3>Price It &amp; Sign</h3>
-          <p>Once we have a full set of drawings, we send them out for pricing, compile the contract, and get it signed.</p>
-        </div>
-        <div class="step">
-          <span class="idx">06</span>
-          <h3>Permit &amp; Build</h3>
-          <p>We pull permits and start construction. On remodels, our architect comes back to the job site any time new design elements need engineering.</p>
-        </div>
-      </div>
-      <p class="process-note">Most custom homes run on a fixed contract. Large remodels are usually billed cost-plus, which tends to serve those projects better as the scope evolves on-site.</p>
-    </div>
-  </section>
-
-  <section id="why">
-    <div class="wrap why-grid">
+  <section id="work" class="section">
+    <div class="section-top">
       <div>
-        <span class="kicker mono">Why Niagara</span>
-        <h2 class="why-heading">Built by a crew that's stayed in Port Orange for 25 years.</h2>
-        <div class="why-list">
-          <div class="why-item">
-            <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
-            <div><h3>Licensed Certified Residential Contractor</h3><p>Active Florida license CRC058289 &mdash; every project is pulled, inspected, and closed out under our own permit.</p></div>
-          </div>
-          <div class="why-item">
-            <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
-            <div><h3>One estimator, start to finish</h3><p>The person who quotes your job is the person who manages it &mdash; no handoff to a stranger once the contract is signed.</p></div>
-          </div>
-          <div class="why-item">
-            <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
-            <div><h3>Local knowledge that saves you money</h3><p>Two decades of Volusia County permitting means fewer surprises with inspections, flood zones, and setback rules.</p></div>
-          </div>
-          <div class="why-item">
-            <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
-            <div><h3>Written, itemized estimates</h3><p>You'll know what you're paying for before a single wall comes down &mdash; no verbal promises, no vague allowances.</p></div>
-          </div>
-        </div>
+        <p class="eyebrow">THE WORK SPEAKS FOR ITSELF</p>
+        <h2>Distinctive homes.<br>Considered details.</h2>
       </div>
-      <div class="stat-card">
-        <div class="stat"><b>1998</b><span>Founded &amp; incorporated in Port Orange, FL</span></div>
-        <div class="stat"><b>99/100</b><span>BuildZoom contractor score &mdash; top 15% statewide</span></div>
-        <div class="stat"><b>32128</b><span>Proudly based &amp; building in Port Orange</span></div>
-        <div class="license">LIC. CRC058289 &middot; NIAGARA BUILDERS INC. &middot; PORT ORANGE, FL</div>
-      </div>
+      <p>Step inside a recently completed waterfront home. From custom cabinetry to spaces that open to the Intracoastal, every detail is part of the bigger picture.</p>
     </div>
+    <div class="work-grid">
+      <button type="button" class="photo large" data-photo="pool.jpg" data-caption="Pool &amp; spa &middot; Intracoastal views">
+        <img src="photos/pool.jpg" alt="Pool and spa overlooking the Intracoastal Waterway" loading="lazy">
+        <span>01 / OUTDOOR LIVING<b>Room to unwind. Space to gather.</b><small>View photograph</small></span>
+      </button>
+      <button type="button" class="photo" data-photo="kitchen.jpg" data-caption="Kitchen &middot; Quartz &amp; custom cabinetry">
+        <img src="photos/kitchen.jpg" alt="Kitchen with quartz waterfall island and custom cabinetry" loading="lazy">
+        <span>02 / INTERIORS<b>The heart of the home, thoughtfully finished.</b><small>View photograph</small></span>
+      </button>
+      <button type="button" class="photo" data-photo="exterior-rear.jpg" data-caption="Exterior &middot; Coastal elevation">
+        <img src="photos/exterior-rear.jpg" alt="Coastal home rear elevation and spiral staircase" loading="lazy">
+        <span>03 / COASTAL DESIGN<b>Built around the way you live.</b><small>View photograph</small></span>
+      </button>
+    </div>
+    <div class="gallery-bottom">
+      <p>A closer look at Niagara craftsmanship.</p>
+      <button type="button" class="outline" id="all-photos">View all 12 photographs</button>
+    </div>
+    <div id="more-gallery" class="more-gallery" hidden></div>
   </section>
 
-  <section id="reviews">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <span class="kicker mono">Reputation</span>
-          <h2>What building in Volusia County for 25 years earns you.</h2>
-        </div>
-      </div>
-      <div class="quotes">
-        <div class="quote">
-          <div class="stars" aria-label="5 out of 5 stars">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 15 9l7 1-5.2 4.9L18.2 22 12 18.3 5.8 22 7.2 14.9 2 10l7-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 15 9l7 1-5.2 4.9L18.2 22 12 18.3 5.8 22 7.2 14.9 2 10l7-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 15 9l7 1-5.2 4.9L18.2 22 12 18.3 5.8 22 7.2 14.9 2 10l7-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 15 9l7 1-5.2 4.9L18.2 22 12 18.3 5.8 22 7.2 14.9 2 10l7-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 15 9l7 1-5.2 4.9L18.2 22 12 18.3 5.8 22 7.2 14.9 2 10l7-1Z"/></svg>
-          </div>
-          <p>"A BuildZoom score of 99 puts Niagara Builders above 85% of licensed contractors in Florida &mdash; one of the highest-rated general contractors in Volusia County."</p>
-          <footer>BuildZoom Contractor Rating</footer>
-        </div>
-        <div class="quote">
-          <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5.5v6c0 5 3.4 8.7 8 10.5 4.6-1.8 8-5.5 8-10.5v-6Z"/><path d="m9 12 2 2 4-4"/></svg>Active &amp; Verified</div>
-          <p>"License CRC058289 has been active and in good standing throughout Niagara Builders' history as a Certified Residential Contractor in the State of Florida."</p>
-          <footer>Florida DBPR License Record</footer>
-        </div>
-        <div class="quote">
-          <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>Established 1998</div>
-          <p>"Incorporated in Port Orange in 1998 and still building in the same community more than 25 years later &mdash; same address, same commitment to the trade."</p>
-          <footer>Florida Division of Corporations</footer>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="contact" id="contact">
-    <div class="wrap contact-grid">
+  <section id="expertise" class="expertise section">
+    <div class="section-top">
       <div>
-        <span class="kicker mono kicker-inverse">Get Started</span>
-        <h2>Tell us about your project.</h2>
-        <p class="lead">We take on a limited number of custom homes and full remodels each year. Send us the details and we'll follow up with next steps and a timeline for an on-site estimate.</p>
-        <ul class="contact-list">
-          <li>
-            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
-            <div><span class="lbl">Email</span><a href="mailto:Niagara510@aol.com">Niagara510@aol.com</a></div>
-          </li>
-          <li>
-            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
-            <div><span class="lbl">Based In</span><span>Port Orange, FL 32128</span></div>
-          </li>
-          <li>
-            <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5.5v6c0 5 3.4 8.7 8 10.5 4.6-1.8 8-5.5 8-10.5v-6Z"/><path d="m9 12 2 2 4-4"/></svg></span>
-            <div><span class="lbl">Licensed</span><span>Florida CRC058289 &mdash; Certified Residential Contractor</span></div>
-          </li>
-        </ul>
+        <p class="eyebrow">TWO SPECIALTIES. ONE STANDARD.</p>
+        <h2>Build your vision.<br>Transform your home.</h2>
       </div>
-
-      <form class="form-card" id="quote-form">
-        <h3>Request a free estimate</h3>
-        <p>We typically reply within one business day.</p>
-
-        <div class="field">
-          <label for="name">Full name</label>
-          <input id="name" name="name" type="text" required autocomplete="name">
-        </div>
-
-        <div class="field">
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" required autocomplete="email">
-        </div>
-
-        <div class="field">
-          <label for="project-type">Project type</label>
-          <select id="project-type" name="project-type">
-            <option>High-end custom home</option>
-            <option>Full home remodel</option>
-            <option>Other / not sure yet</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="details">Project details</label>
-          <textarea id="details" name="details" placeholder="Property address, rough scope, timeline..."></textarea>
-        </div>
-
-        <button class="submit-btn" type="submit">Get in Contact</button>
-        <p class="form-note">By submitting, you agree to be contacted about your project by email.</p>
-        <div class="success-msg" id="success-msg">Thanks &mdash; your request has been noted. Niagara Builders will follow up at the email you provided.</div>
-      </form>
+      <p>A select number of projects each year means focused attention on the home&mdash;and the people&mdash;behind every build.</p>
     </div>
+    <div class="service-grid">
+      <article>
+        <span class="index">01</span>
+        <h3>A custom home,<br>from the ground up.</h3>
+        <p>Bring your ideas to life with a high-end, single-family home. We coordinate design, engineering, permitting, and construction through one considered process.</p>
+        <a href="#contact">Discuss your custom home</a>
+      </article>
+      <article>
+        <span class="index">02</span>
+        <h3>A familiar address.<br>An entirely new feeling.</h3>
+        <p>Reimagine your whole home with a complete renovation. Layout, structural work, and finishes come together under one contract, with a cohesive vision throughout.</p>
+        <a href="#contact">Discuss your remodel</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="about" class="about section">
+    <div class="about-image">
+      <img src="photos/lanai.jpg" alt="Covered waterfront lanai beside a Niagara Builders pool" loading="lazy">
+      <span>Made for life on the water.</span>
+    </div>
+    <div>
+      <p class="eyebrow">LOCAL ROOTS. PERSONAL COMMITMENT.</p>
+      <h2>Your home deserves<br>a builder who stays involved.</h2>
+      <p>Family-run and based in Port Orange, Niagara Builders brings local experience and hands-on oversight to custom homes and full remodels across Volusia County.</p>
+      <div class="reasons">
+        <article>
+          <h3>One point of contact.</h3>
+          <p>The person who estimates your project also manages it. Your vision stays with someone who knows it.</p>
+        </article>
+        <article>
+          <h3>Clarity before construction.</h3>
+          <p>Written, itemized estimates help you understand the scope and cost before work begins.</p>
+        </article>
+        <article>
+          <h3>Experience close to home.</h3>
+          <p>Local knowledge guides the design, permitting, and construction process.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="approach" class="process section">
+    <div class="section-top">
+      <div>
+        <p class="eyebrow">FROM FIRST IDEAS TO FINAL WALKTHROUGH</p>
+        <h2>A clear path to<br>the home you imagine.</h2>
+      </div>
+      <p>A personal conversation starts the process. A shared plan carries it forward.</p>
+    </div>
+    <div class="steps">
+      <article>
+        <span>01 / CONNECT</span>
+        <h3>Let&rsquo;s walk and talk.</h3>
+        <p>Meet on-site, share your plans, and see our work firsthand. We can also connect you with past clients.</p>
+      </article>
+      <article>
+        <span>02 / DESIGN</span>
+        <h3>Give your ideas a plan.</h3>
+        <p>Exchange references and work with our architect to refine the design and engineering.</p>
+      </article>
+      <article>
+        <span>03 / DEFINE</span>
+        <h3>Know what comes next.</h3>
+        <p>Completed drawings guide pricing, the scope of work, and a signed contract.</p>
+      </article>
+      <article>
+        <span>04 / BUILD</span>
+        <h3>Watch it come together.</h3>
+        <p>We coordinate permits and construction, with architectural input as your project requires.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="contact" class="contact section">
+    <div>
+      <p class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</p>
+      <h2>Let&rsquo;s build something<br>you&rsquo;ll love coming home to.</h2>
+      <p>Tell us where you&rsquo;re building, what you have in mind, and when you&rsquo;d like to begin.</p>
+      <a class="email" href="mailto:Niagara510@aol.com">Niagara510@aol.com</a>
+      <p class="contact-meta">Port Orange, FL 32128<br>Serving Volusia County</p>
+    </div>
+    <form id="inquiry">
+      <h3>Tell us about your project.</h3>
+      <div class="fields">
+        <label>Your name<input name="name" required autocomplete="name"></label>
+        <label>Email address<input name="email" type="email" required autocomplete="email"></label>
+      </div>
+      <label>What are you planning?
+        <select name="type">
+          <option>Custom home</option>
+          <option>Full home remodel</option>
+          <option>I&rsquo;m exploring my options</option>
+        </select>
+      </label>
+      <label>Your vision<textarea name="details" rows="4" placeholder="Location, ideas, and your ideal timeline&hellip;" required></textarea></label>
+      <button class="button white" type="submit">Get in Contact</button>
+      <p class="form-note">Opens your email app with your project details. Send the email there to contact Niagara Builders.</p>
+      <p id="form-status" role="status"></p>
+    </form>
   </section>
 
 </main>
 
-<footer class="site">
-  <div class="wrap">
-    <div class="f-brand">
-      <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#8DBCD7" transform="translate(42,0)"/>
-        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#76ADD0" transform="translate(30,0)"/>
-        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#5B9CC8" transform="translate(18,0)"/>
-        <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#0071C8"/>
-        <rect x="26" y="19" width="219" height="366" rx="1.5" fill="var(--ink)"/>
-      </svg>
-      <p>&copy; 2026 Niagara Builders Inc. &middot; Lic. CRC058289 &middot; Port Orange, FL</p>
-    </div>
-  </div>
-  <div class="wrap credit-row">
+<footer>
+  <a class="brand" href="#top">
+    <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#8DBCD7" transform="translate(42,0)"/>
+      <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#76ADD0" transform="translate(30,0)"/>
+      <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#5B9CC8" transform="translate(18,0)"/>
+      <path d="M 265 30 C 300 23 360 22 398 28 C 440 35 469 61 482 100 C 488 118 489 143 488 170 L 481 382 L 331 382 L 329 200 C 329 180 323 165 313 157 C 303 149 291 145 276 144 L 259 142 L 258 38 C 258 34 261 31 265 30 Z" fill="#0071C8"/>
+      <rect x="26" y="19" width="219" height="366" rx="1.5" fill="#142a37"/>
+    </svg>
+    <span>NIAGARA<small>BUILDERS</small></span>
+  </a>
+  <p>Custom homes. Complete transformations.<br>Port Orange, Florida &middot; License CRC058289</p>
+  <div class="f-foot">
+    <span>&copy; 2026 Niagara Builders Inc.</span>
     <a class="credit-link" href="https://nsd-digital.com" target="_blank" rel="noopener">Powered By NSD-Digital</a>
   </div>
 </footer>
 
+<dialog id="lightbox">
+  <button type="button" id="close" aria-label="Close photograph">Close</button>
+  <img id="full-image" alt="">
+  <div class="dialog-bottom">
+    <button type="button" id="previous">Previous</button>
+    <p id="caption"></p>
+    <button type="button" id="next">Next</button>
+  </div>
+</dialog>
+
 <script>
-  (function(){
-    var form = document.getElementById('quote-form');
-    var success = document.getElementById('success-msg');
-    if(!form) return;
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      success.classList.add('show');
-      form.reset();
-    });
-  })();
+  const photos = [
+    ['pool.jpg','Pool & spa · Intracoastal views'],
+    ['kitchen.jpg','Kitchen · Quartz & custom cabinetry'],
+    ['exterior-rear.jpg','Exterior · Coastal elevation'],
+    ['exterior-modern.jpg','New construction · Waterfront home'],
+    ['lanai.jpg','Outdoor living · Covered lanai'],
+    ['hero.jpg','Recently completed · Port Orange'],
+    ['kitchen-2.jpg','Kitchen · Island & prep table'],
+    ['kitchen-3.jpg','Kitchen · Custom cabinetry'],
+    ['pool-2.jpg','Pool & spa · Coastal backyard'],
+    ['owner-site.jpg','On site · Niagara Builders'],
+    ['render-1.jpg','Design rendering · Rear exterior'],
+    ['render-2.jpg','Design rendering · Side exterior']
+  ];
+  const dlg = document.querySelector('#lightbox');
+  let current = 0;
 
-  (function(){
-    var photos = [
-      { src:'photos/pool.jpg', alt:'Backyard pool and spillover spa overlooking the Intracoastal Waterway', caption:'Pool & Spa · Intracoastal Views' },
-      { src:'photos/kitchen.jpg', alt:'White kitchen remodel with quartz waterfall island and built-in wine fridge', caption:'Kitchen · Quartz & Custom Cabinetry' },
-      { src:'photos/exterior-rear.jpg', alt:'Rear exterior of coastal home with spiral staircase to upper deck', caption:'Exterior · Coastal Elevation' },
-      { src:'photos/exterior-modern.jpg', alt:'Two-story custom home exterior with metal hip roofs and second-floor balcony', caption:'New Construction · Waterfront Home' },
-      { src:'photos/lanai.jpg', alt:'Covered lanai seating area overlooking the pool and waterway', caption:'Outdoor Living · Covered Lanai' },
-      { src:'photos/hero.jpg', alt:'Recently completed custom home with Niagara Builders job-site sign out front', caption:'Recently Completed · Port Orange, FL' },
-      { src:'photos/kitchen-2.jpg', alt:'Kitchen with waterfall island, prep table, and stainless built-in refrigerator', caption:'Kitchen · Island & Prep Table' },
-      { src:'photos/kitchen-3.jpg', alt:'Full kitchen view with cabinetry, range, and marble-look backsplash', caption:'Kitchen · Full Run of Cabinetry' },
-      { src:'photos/pool-2.jpg', alt:'Backyard pool and spa with two-story coastal home behind it', caption:'Pool & Spa · Coastal Backyard' },
-      { src:'photos/owner-site.jpg', alt:'Niagara Builders job-site sign with the owner on site near the water', caption:'On Site · Niagara Builders' },
-      { src:'photos/render-1.jpg', alt:'Architectural rendering of a large custom coastal home, rear exterior', caption:'Design Rendering · Custom Coastal Home' },
-      { src:'photos/render-2.jpg', alt:'Architectural rendering of a large custom coastal home, side exterior', caption:'Design Rendering · Custom Coastal Home' }
-    ];
-
-    var lightbox = document.getElementById('lightbox');
-    var lbImg = document.getElementById('lb-img');
-    var lbCaption = document.getElementById('lb-caption');
-    var lbCounter = document.getElementById('lb-counter');
-    var lbClose = document.getElementById('lb-close');
-    var lbPrev = document.getElementById('lb-prev');
-    var lbNext = document.getElementById('lb-next');
-    var current = 0;
-    var lastFocused = null;
-
-    function render(){
-      var p = photos[current];
-      lbImg.src = p.src;
-      lbImg.alt = p.alt;
-      lbCaption.textContent = p.caption;
-      lbCounter.textContent = (current + 1) + ' / ' + photos.length;
+  function render(){
+    document.querySelector('#full-image').src = 'photos/' + photos[current][0];
+    document.querySelector('#full-image').alt = photos[current][1];
+    document.querySelector('#caption').textContent = photos[current][1] + ' · ' + (current+1) + ' / ' + photos.length;
+  }
+  function openPhoto(file){
+    current = photos.findIndex(p => p[0] === file);
+    render();
+    dlg.showModal();
+  }
+  document.querySelectorAll('[data-photo]').forEach(b => b.onclick = () => openPhoto(b.dataset.photo));
+  document.querySelector('#close').onclick = () => dlg.close();
+  document.querySelector('#next').onclick = () => { current = (current+1) % photos.length; render(); };
+  document.querySelector('#previous').onclick = () => { current = (current+photos.length-1) % photos.length; render(); };
+  dlg.addEventListener('click', e => {
+    if (e.target === dlg) {
+      const r = dlg.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
     }
-    function open(index){
-      current = index;
-      lastFocused = document.activeElement;
-      render();
-      lightbox.classList.add('open');
-      lightbox.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      lbClose.focus();
-    }
-    function close(){
-      lightbox.classList.remove('open');
-      lightbox.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      if (lastFocused && lastFocused.focus) lastFocused.focus();
-    }
-    function next(){ current = (current + 1) % photos.length; render(); }
-    function prev(){ current = (current - 1 + photos.length) % photos.length; render(); }
-
-    document.querySelectorAll('[data-lightbox-open]').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        open(parseInt(btn.getAttribute('data-lightbox-open'), 10));
+  });
+  dlg.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') document.querySelector('#next').click();
+    if (e.key === 'ArrowLeft') document.querySelector('#previous').click();
+  });
+  document.querySelector('#all-photos').onclick = () => {
+    const g = document.querySelector('#more-gallery');
+    if (!g.children.length) {
+      photos.slice(3).forEach(p => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'photo';
+        const img = document.createElement('img');
+        img.src = 'photos/' + p[0];
+        img.alt = p[1];
+        img.loading = 'lazy';
+        const span = document.createElement('span');
+        const bold = document.createElement('b');
+        bold.textContent = p[1];
+        span.append(bold);
+        b.append(img, span);
+        b.onclick = () => openPhoto(p[0]);
+        g.append(b);
       });
-    });
-    lbClose.addEventListener('click', close);
-    lbNext.addEventListener('click', next);
-    lbPrev.addEventListener('click', prev);
-    lightbox.addEventListener('click', function(e){
-      if (e.target === lightbox) close();
-    });
-    document.addEventListener('keydown', function(e){
-      if (!lightbox.classList.contains('open')) return;
-      if (e.key === 'Escape') close();
-      if (e.key === 'ArrowRight') next();
-      if (e.key === 'ArrowLeft') prev();
-    });
-  })();
+    }
+    g.hidden = !g.hidden;
+    document.querySelector('#all-photos').textContent = g.hidden ? 'View all 12 photographs' : 'Show fewer photographs';
+  };
+  document.querySelector('#menu').onclick = () => {
+    const n = document.querySelector('header nav');
+    n.classList.toggle('open');
+    document.querySelector('#menu').setAttribute('aria-expanded', n.classList.contains('open'));
+  };
+  document.querySelectorAll('nav a').forEach(a => a.onclick = () => {
+    document.querySelector('header nav').classList.remove('open');
+    document.querySelector('#menu').setAttribute('aria-expanded', 'false');
+  });
+  document.querySelector('#inquiry').onsubmit = e => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const body = `Name: ${f.get('name')}\nEmail: ${f.get('email')}\nProject: ${f.get('type')}\n\n${f.get('details')}`;
+    location.href = 'mailto:Niagara510@aol.com?subject=' + encodeURIComponent('Project inquiry — ' + f.get('type')) + '&body=' + encodeURIComponent(body);
+    document.querySelector('#form-status').textContent = 'Your email draft is ready to open. Please send it from your email app, or email Niagara510@aol.com directly.';
+  };
 </script>
